@@ -277,11 +277,16 @@
     const btnTodos = document.getElementById('btnTodos');
     const btnCercanos = document.getElementById('btnCercanos');
 
-    // Forzar el enfoque después de un retraso más largo
+    // Mantener el enfoque en la barra de búsqueda
     window.addEventListener('load', () => {
       setTimeout(() => {
         searchInput.focus();
       }, 500); // 500ms de retraso para asegurar que la página haya cargado completamente
+    });
+
+    // Cerrar el teclado cuando el botón de retroceso es presionado
+    window.addEventListener('popstate', () => {
+      searchInput.blur();
     });
 
     searchInput.addEventListener('input', function () {
