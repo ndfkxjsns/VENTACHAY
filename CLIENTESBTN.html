@@ -27,7 +27,6 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow-y: auto; /* Agregamos el desplazamiento vertical */
     }
 
     .header {
@@ -78,16 +77,17 @@
       flex-direction: column;
       order: 3;
       flex-grow: 1;
+      overflow-y: auto;
       gap: 10px;
     }
 
     .client-item {
       background-color: white;
-      padding: 15px;
+      padding: 12px;
       margin: 0;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      height: 160px; /* Reducimos la altura */
+      height: auto;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -135,12 +135,12 @@
 
     .client-footer {
       position: absolute;
-      bottom: 10px; 
+      bottom: 10px;
       right: 10px;
       display: flex;
       flex-direction: column;
-      align-items: flex-end; 
-      margin-top: 0; 
+      align-items: flex-end;
+      margin-top: 0;
     }
 
     .store-icon {
@@ -344,6 +344,28 @@
       KPI
     </div>
   </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const clientList = document.getElementById('listaClientes');
+    
+    searchInput.addEventListener('input', function() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const clientItems = clientList.getElementsByClassName('client-item');
+      
+      Array.from(clientItems).forEach(item => {
+        const clientName = item.querySelector('.client-name').textContent.toLowerCase();
+        const clientCode = item.querySelector('.client-code').textContent.toLowerCase();
+        const clientAddress = item.querySelector('.client-address').textContent.toLowerCase();
+        
+        if (clientName.includes(searchTerm) || clientCode.includes(searchTerm) || clientAddress.includes(searchTerm)) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
