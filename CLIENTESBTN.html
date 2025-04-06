@@ -34,7 +34,6 @@
       font-size: 22px;
       font-weight: bold;
       margin-bottom: 15px;
-      order: 2;
     }
 
     .top-menu {
@@ -42,7 +41,6 @@
       justify-content: space-between;
       flex-wrap: wrap;
       margin-bottom: 15px;
-      order: 1;
     }
 
     .menu-btn {
@@ -75,21 +73,19 @@
     .client-list {
       display: flex;
       flex-direction: column;
-      order: 3;
-      flex-grow: 1;
-      overflow-y: auto;
       gap: 10px;
+      flex-grow: 1;
+      overflow: hidden;
     }
 
     .client-item {
       background-color: white;
       padding: 12px;
-      margin: 0;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      height: auto;
       display: flex;
       flex-direction: column;
+      height: 160px; /* Aumentado para el icono */
       position: relative;
     }
 
@@ -101,15 +97,15 @@
       font-size: 16px;
       font-weight: bold;
       color: #E65100;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
     .client-code,
     .client-distance,
     .client-status,
     .client-address {
-      font-size: 14px;
-      margin-bottom: 5px;
+      font-size: 13px;
+      margin-bottom: 3px;
     }
 
     .client-distance {
@@ -120,56 +116,58 @@
     .client-status {
       background-color: #f0f0f0;
       color: #666;
-      padding: 3px 8px;
+      padding: 2px 6px;
       border-radius: 4px;
       display: inline-block;
-      margin: 5px 0;
+      font-size: 12px;
     }
 
     .client-address {
       color: #666;
       border-top: 1px solid #eee;
-      padding-top: 8px;
-      margin-top: 8px;
+      padding-top: 6px;
+      margin-top: 6px;
+      font-size: 13px;
     }
 
-    .client-footer {
+    .client-right-section {
       position: absolute;
-      bottom: 10px;
-      right: 10px;
+      right: 12px;
+      bottom: 12px;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      margin-top: 0;
+      align-items: center;
+      width: 120px;
+    }
+
+    .store-icon-container {
+      width: 48px; /* 3 veces más grande */
+      height: 48px;
+      background-color: #E65100;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
     }
 
     .store-icon {
-      font-size: 48px;
-      color: #E65100;
-      margin-bottom: 15px;
-      align-self: center;
-      background-color: #fff;
-      border-radius: 50%;
-      padding: 15px;
-      border: 2px solid #E65100;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      color: white;
+      font-size: 24px; /* Tamaño aumentado */
     }
 
     .client-actions {
       display: flex;
-      justify-content: flex-end;
       gap: 8px;
     }
 
     .client-action {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       color: white;
-      padding: 8px 15px;
-      border-radius: 5px;
+      padding: 6px 12px;
+      border-radius: 4px;
       text-align: center;
-      flex: 1;
-      max-width: 120px;
     }
 
     .client-action.more {
@@ -206,6 +204,37 @@
       margin-right: 10px;
       color: #FB8C00;
       font-size: 16px;
+    }
+
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 12px 10px;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .bottom-btn {
+      color: #E65100;
+      font-weight: bold;
+      text-align: center;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .bottom-btn i {
+      font-size: 20px;
+      margin-bottom: 5px;
     }
   </style>
 </head>
@@ -248,8 +277,10 @@
           <div class="client-status">No programado</div>
           <div class="client-address">Calle Hidalgo, 555</div>
         </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
+        <div class="client-right-section">
+          <div class="store-icon-container">
+            <i class="fas fa-store store-icon"></i>
+          </div>
           <div class="client-actions">
             <div class="client-action more">MÁS</div>
             <div class="client-action visit">VISITA</div>
@@ -266,8 +297,10 @@
           <div class="client-status">No programado</div>
           <div class="client-address">Calle Aldama, 1</div>
         </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
+        <div class="client-right-section">
+          <div class="store-icon-container">
+            <i class="fas fa-store store-icon"></i>
+          </div>
           <div class="client-actions">
             <div class="client-action more">MÁS</div>
             <div class="client-action visit">VISITA</div>
@@ -284,8 +317,10 @@
           <div class="client-status">No programado</div>
           <div class="client-address">Av. Principal 123</div>
         </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
+        <div class="client-right-section">
+          <div class="store-icon-container">
+            <i class="fas fa-store store-icon"></i>
+          </div>
           <div class="client-actions">
             <div class="client-action more">MÁS</div>
             <div class="client-action visit">VISITA</div>
@@ -295,11 +330,24 @@
     </div>
   </div>
 
-  <!-- Redirección al enfocar el campo de búsqueda -->
-  <script>
-    document.getElementById("searchInput").addEventListener("focus", function () {
-      window.location.href = "BUSQUEDAPRODUC.html";
-    });
-  </script>
+  <div class="bottom-menu">
+    <div class="bottom-btn">
+      <i class="fas fa-route"></i>
+      RUTAS
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-calendar-day"></i>
+      DEL DÍA
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-user-plus"></i>
+      AGREGAR
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-chart-line"></i>
+      KPI
+    </div>
+  </div>
+
 </body>
 </html>
