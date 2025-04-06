@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Clientes</title>
+  <title>Buscar Productos</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <style>
+    /* Estilos de la barra de búsqueda */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -17,158 +18,6 @@
       font-family: Arial, sans-serif;
       background-color: #f5f5f5;
       color: #333;
-      overflow: hidden;
-    }
-
-    .main-content {
-      padding: 15px;
-      padding-top: 60px;
-      padding-bottom: 20px;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header {
-      color: #E65100;
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      order: 2;
-    }
-
-    .top-menu {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 15px;
-      order: 1;
-      gap: 10px;
-    }
-
-    .menu-btn {
-      background-color: #FB8C00;
-      color: white;
-      width: 48%;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      font-size: 14px;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border: none;
-      cursor: pointer;
-    }
-
-    .menu-btn.active {
-      background-color: #E65100;
-    }
-
-    .client-list {
-      display: flex;
-      flex-direction: column;
-      order: 3;
-      flex-grow: 1;
-      overflow-y: auto;
-      gap: 10px;
-    }
-
-    .client-item {
-      background-color: white;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    .client-info {
-      flex: 1;
-    }
-
-    .client-name {
-      font-size: 16px;
-      font-weight: bold;
-      color: #E65100;
-      margin-bottom: 5px;
-    }
-
-    .client-code,
-    .client-distance,
-    .client-status,
-    .client-address {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .client-distance {
-      color: #E65100;
-      font-weight: bold;
-    }
-
-    .client-status {
-      background-color: #f0f0f0;
-      color: #666;
-      padding: 3px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin: 5px 0;
-    }
-
-    .client-address {
-      color: #666;
-      border-top: 1px solid #eee;
-      padding-top: 8px;
-      margin-top: 8px;
-    }
-
-    .client-footer {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    .store-icon {
-      font-size: 48px;
-      color: #E65100;
-      margin-bottom: 15px;
-      align-self: center;
-      background-color: #fff;
-      border-radius: 50%;
-      padding: 15px;
-      border: 2px solid #E65100;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .client-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
-
-    .client-action {
-      font-size: 14px;
-      font-weight: bold;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 5px;
-      text-align: center;
-      flex: 1;
-      max-width: 120px;
-    }
-
-    .client-action.more {
-      background-color: #6c757d;
-    }
-
-    .client-action.visit {
-      background-color: #28a745;
     }
 
     .search-bar {
@@ -204,120 +53,20 @@
 
   <div class="search-bar">
     <i class="fas fa-search"></i>
-    <input type="text" id="searchInput" placeholder="Buscar ID, RFC, Nombre o Razón social">
+    <input type="text" id="searchInput" placeholder="Buscar Producto">
   </div>
 
-  <div class="main-content">
-    <div class="top-menu">
-      <button class="menu-btn active" id="btnTodos">TODOS</button>
-      <button class="menu-btn" id="btnCercanos">MÁS CERCANOS</button>
-    </div>
-
-    <div class="header">Lista de Clientes</div>
-
-    <div class="client-list" id="listaClientes">
-      <!-- Cliente 1 -->
-      <div class="client-item" data-distancia="1000">
-        <div class="client-info">
-          <div class="client-name">Miscelánea Dos Hermanos</div>
-          <div class="client-code">RT-166-2728</div>
-          <div class="client-distance">A 1.0 km</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Calle Hidalgo, 555</div>
-        </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="client-item" data-distancia="8">
-        <div class="client-info">
-          <div class="client-name">CLIENTE DE PRUEBA</div>
-          <div class="client-code">RT-000-0000</div>
-          <div class="client-distance">A 8.0 m</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Calle Aldama, 1</div>
-        </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="client-item" data-distancia="719">
-        <div class="client-info">
-          <div class="client-name">Abarrotes El Porvenir</div>
-          <div class="client-code">RT-166-2731</div>
-          <div class="client-distance">A 719.0 m</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Av. Principal 123</div>
-        </div>
-        <div class="client-footer">
-          <i class="fas fa-store store-icon"></i>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Resto de contenido para la búsqueda de productos -->
 
   <script>
-    const searchInput = document.getElementById('searchInput');
-    const clientList = document.getElementById('listaClientes');
-    const clientItems = Array.from(clientList.getElementsByClassName('client-item'));
-    const btnTodos = document.getElementById('btnTodos');
-    const btnCercanos = document.getElementById('btnCercanos');
-
-    // Forzar el enfoque después de un retraso más largo
     window.addEventListener('load', () => {
       setTimeout(() => {
-        searchInput.focus();
-      }, 500); // 500ms de retraso para asegurar que la página haya cargado completamente
-    });
-
-    searchInput.addEventListener('input', function () {
-      const searchTerm = searchInput.value.toLowerCase();
-      clientItems.forEach(item => {
-        const name = item.querySelector('.client-name').textContent.toLowerCase();
-        const code = item.querySelector('.client-code').textContent.toLowerCase();
-        const address = item.querySelector('.client-address').textContent.toLowerCase();
-
-        if (name.includes(searchTerm) || code.includes(searchTerm) || address.includes(searchTerm)) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+          searchInput.focus();  // Forzar el enfoque del campo de búsqueda
         }
-      });
-    });
-
-    btnTodos.addEventListener('click', () => {
-      btnTodos.classList.add('active');
-      btnCercanos.classList.remove('active');
-      clientItems.forEach(item => item.style.display = 'flex');
-    });
-
-    btnCercanos.addEventListener('click', () => {
-      btnTodos.classList.remove('active');
-      btnCercanos.classList.add('active');
-
-      const sorted = clientItems
-        .map(item => ({ item, distancia: parseFloat(item.dataset.distancia) }))
-        .sort((a, b) => a.distancia - b.distancia)
-        .slice(0, 5);
-
-      clientItems.forEach(item => item.style.display = 'none');
-      sorted.forEach(entry => entry.item.style.display = 'flex');
+      }, 500); // Retardo de 500ms para asegurar que la página esté completamente cargada
     });
   </script>
-
 </body>
 </html>
