@@ -23,6 +23,7 @@
     .main-content {
       padding: 15px;
       padding-top: 60px;
+      padding-bottom: 80px;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -69,13 +70,18 @@
       margin-bottom: 8px;
     }
 
-    .client-list {
+    .client-list-container {
+      flex: 1;
       display: flex;
       flex-direction: column;
+    }
+
+    .client-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       gap: 10px;
-      flex-grow: 1;
-      overflow: hidden;
-      height: calc(100vh - 195px); /* Ajustamos para evitar recorte de los clientes */
     }
 
     .client-item {
@@ -84,14 +90,17 @@
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
-      flex-direction: column;
-      height: calc(100% / 3 - 10px); /* Aseguramos que cada cliente ocupe un tercio de la altura */
       position: relative;
+      width: 100%;
+      height: calc((100vh - 275px) / 3); /* Cálculo preciso del espacio */
     }
 
     .client-info {
       flex: 1;
-      margin-right: 130px;
+      margin-right: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .client-name {
@@ -127,7 +136,7 @@
       color: #666;
       border-top: 1px solid #eee;
       padding-top: 6px;
-      margin-top: 6px;
+      margin-top: auto; /* Empuja hacia abajo */
       font-size: 13px;
     }
 
@@ -135,10 +144,12 @@
       position: absolute;
       right: 15px;
       top: 15px;
+      bottom: 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 110px;
+      justify-content: space-between;
+      width: 100px;
     }
 
     .store-icon-container {
@@ -149,7 +160,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
     }
 
     .store-icon {
@@ -160,6 +170,7 @@
     .client-actions {
       display: flex;
       gap: 8px;
+      margin-top: auto; /* Empuja hacia abajo */
     }
 
     .client-action {
@@ -269,63 +280,71 @@
 
     <div class="header">Clientes cercanos</div>
 
-    <div class="client-list" id="listaClientes">
-      <!-- Cliente 1 -->
-      <div class="client-item">
-        <div class="client-info">
-          <div class="client-name">Miscelánea Dos Hermanos</div>
-          <div class="client-code">RT-166-2728</div>
-          <div class="client-distance">A 1.0 km</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Calle Hidalgo, 555</div>
-        </div>
-        <div class="client-right-section">
-          <div class="store-icon-container">
-            <i class="fas fa-store store-icon"></i>
+    <div class="client-list-container">
+      <div class="client-list" id="listaClientes">
+        <!-- Cliente 1 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">Miscelánea Dos Hermanos</div>
+              <div class="client-code">RT-166-2728</div>
+              <div class="client-distance">A 1.0 km</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Calle Hidalgo, 555</div>
           </div>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Cliente 2 -->
-      <div class="client-item">
-        <div class="client-info">
-          <div class="client-name">CLIENTE DE PRUEBA</div>
-          <div class="client-code">RT-000-0000</div>
-          <div class="client-distance">A 8.0 m</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Calle Aldama, 1</div>
-        </div>
-        <div class="client-right-section">
-          <div class="store-icon-container">
-            <i class="fas fa-store store-icon"></i>
+        <!-- Cliente 2 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">CLIENTE DE PRUEBA</div>
+              <div class="client-code">RT-000-0000</div>
+              <div class="client-distance">A 8.0 m</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Calle Aldama, 1</div>
           </div>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Cliente 3 -->
-      <div class="client-item">
-        <div class="client-info">
-          <div class="client-name">Abarrotes El Porvenir</div>
-          <div class="client-code">RT-166-2731</div>
-          <div class="client-distance">A 719.0 m</div>
-          <div class="client-status">No programado</div>
-          <div class="client-address">Av. Principal 123</div>
-        </div>
-        <div class="client-right-section">
-          <div class="store-icon-container">
-            <i class="fas fa-store store-icon"></i>
+        <!-- Cliente 3 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">Abarrotes El Porvenir</div>
+              <div class="client-code">RT-166-2731</div>
+              <div class="client-distance">A 719.0 m</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Av. Principal 123</div>
           </div>
-          <div class="client-actions">
-            <div class="client-action more">MÁS</div>
-            <div class="client-action visit">VISITA</div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
           </div>
         </div>
       </div>
@@ -352,4 +371,4 @@
   </div>
 
 </body>
-        </html>
+</html>
