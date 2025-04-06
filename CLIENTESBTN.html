@@ -27,6 +27,7 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-y: auto; /* Agregamos el desplazamiento vertical */
     }
 
     .header {
@@ -77,7 +78,6 @@
       flex-direction: column;
       order: 3;
       flex-grow: 1;
-      overflow: hidden;
       gap: 10px;
     }
 
@@ -87,10 +87,10 @@
       margin: 0;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      height: 180px;
+      height: 160px; /* Reducimos la altura */
       display: flex;
       flex-direction: column;
-      position: relative; 
+      position: relative;
     }
 
     .client-info {
