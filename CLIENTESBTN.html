@@ -358,10 +358,11 @@
         const clientCode = item.querySelector('.client-code').textContent.toLowerCase();
         const clientAddress = item.querySelector('.client-address').textContent.toLowerCase();
         
+        // Filtrar basándonos en el nombre, código y dirección
         if (clientName.includes(searchTerm) || clientCode.includes(searchTerm) || clientAddress.includes(searchTerm)) {
-          item.style.display = '';
+          item.style.display = 'flex'; // Mostrar el cliente
         } else {
-          item.style.display = 'none';
+          item.style.display = 'none'; // Ocultar el cliente
         }
       });
     });
