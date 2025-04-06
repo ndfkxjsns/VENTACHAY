@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clientes cercanos</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      overflow: hidden;
+    }
+
+    .main-content {
+      padding: 15px;
+      padding-top: 60px;
+      padding-bottom: 80px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      color: #E65100;
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .top-menu {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .menu-btn {
+      background-color: #FB8C00;
+      color: white;
+      width: 23%;
+      height: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      font-size: 12px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-btn.active {
+      background-color: #E65100;
+    }
+
+    .menu-btn i {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .client-list-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .client-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .client-item {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      position: relative;
+      width: 100%;
+      height: calc((100vh - 275px) / 3); /* Cálculo preciso del espacio */
+    }
+
+    .client-info {
+      flex: 1;
+      margin-right: 110px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .client-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: #E65100;
+      margin-bottom: 4px;
+    }
+
+    .client-code,
+    .client-distance,
+    .client-status,
+    .client-address {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .client-distance {
+      color: #E65100;
+      font-weight: bold;
+    }
+
+    .client-status {
+      background-color: #f0f0f0;
+      color: #666;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      font-size: 12px;
+    }
+
+    .client-address {
+      color: #666;
+      border-top: 1px solid #eee;
+      padding-top: 6px;
+      margin-top: auto; /* Empuja hacia abajo */
+      font-size: 13px;
+    }
+
+    .client-right-section {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      width: 100px;
+    }
+
+    .store-icon-container {
+      width: 60px;
+      height: 60px;
+      background-color: #E65100;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .store-icon {
+      color: white;
+      font-size: 30px;
+    }
+
+    .client-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: auto; /* Empuja hacia abajo */
+    }
+
+    .client-action {
+      font-size: 13px;
+      font-weight: bold;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      text-align: center;
+      min-width: 50px;
+    }
+
+    .client-action.more {
+      background-color: #6c757d;
+    }
+
+    .client-action.visit {
+      background-color: #28a745;
+    }
+
+    .search-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background-color: white;
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .search-bar i {
+      margin-right: 10px;
+      color: #FB8C00;
+      font-size: 16px;
+    }
+
+    .bottom-menu {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 12px 10px;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .bottom-btn {
+      color: #E65100;
+      font-weight: bold;
+      text-align: center;
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .bottom-btn i {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Buscar ID, RFC, Nombre o Razón social">
+  </div>
+
+  <div class="main-content">
+    <div class="top-menu">
+      <button class="menu-btn">
+        <i class="fas fa-clock"></i>
+        PENDIENTES (0)
+      </button>
+      <button class="menu-btn active">
+        <i class="fas fa-list"></i>
+        TODOS (3)
+      </button>
+      <button class="menu-btn">
+        <i class="fas fa-map-marker-alt"></i>
+        UBICACIÓN
+      </button>
+      <button class="menu-btn">
+        <i class="fas fa-qrcode"></i>
+        ESCANEAR
+      </button>
+    </div>
+
+    <div class="header">Clientes cercanos</div>
+
+    <div class="client-list-container">
+      <div class="client-list" id="listaClientes">
+        <!-- Cliente 1 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">Miscelánea Dos Hermanos</div>
+              <div class="client-code">RT-166-2728</div>
+              <div class="client-distance">A 1.0 km</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Calle Hidalgo, 555</div>
+          </div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cliente 2 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">CLIENTE DE PRUEBA</div>
+              <div class="client-code">RT-000-0000</div>
+              <div class="client-distance">A 8.0 m</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Calle Aldama, 1</div>
+          </div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cliente 3 -->
+        <div class="client-item">
+          <div class="client-info">
+            <div>
+              <div class="client-name">Abarrotes El Porvenir</div>
+              <div class="client-code">RT-166-2731</div>
+              <div class="client-distance">A 719.0 m</div>
+              <div class="client-status">No programado</div>
+            </div>
+            <div class="client-address">Av. Principal 123</div>
+          </div>
+          <div class="client-right-section">
+            <div class="store-icon-container">
+              <i class="fas fa-store store-icon"></i>
+            </div>
+            <div class="client-actions">
+              <div class="client-action more">MÁS</div>
+              <div class="client-action visit">VISITA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-menu">
+    <div class="bottom-btn">
+      <i class="fas fa-route"></i>
+      RUTAS
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-calendar-day"></i>
+      DEL DÍA
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-user-plus"></i>
+      AGREGAR
+    </div>
+    <div class="bottom-btn">
+      <i class="fas fa-chart-line"></i>
+      KPI
+    </div>
+  </div>
+
+</body>
+</html>
