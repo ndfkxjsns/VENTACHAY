@@ -23,7 +23,6 @@
     .main-content {
       padding: 15px;
       padding-top: 60px;
-      padding-bottom: 80px;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -76,6 +75,7 @@
       gap: 10px;
       flex-grow: 1;
       overflow: hidden;
+      height: calc(100vh - 195px); /* Ajustamos para evitar recorte de los clientes */
     }
 
     .client-item {
@@ -85,13 +85,13 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: flex;
       flex-direction: column;
-      height: 190px; /* Ajustado para contener todo */
+      height: calc(100% / 3 - 10px); /* Aseguramos que cada cliente ocupe un tercio de la altura */
       position: relative;
     }
 
     .client-info {
       flex: 1;
-      margin-right: 130px; /* Espacio para la sección derecha */
+      margin-right: 130px;
     }
 
     .client-name {
@@ -352,4 +352,4 @@
   </div>
 
 </body>
-</html>
+        </html>
