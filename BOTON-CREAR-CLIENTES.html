@@ -472,11 +472,14 @@
     }
 
     document.querySelector('.save-button').addEventListener('click', async function() {
+      alert('Botón de guardar clickeado'); // AGREGADO PARA DEPURACIÓN EN CELULAR
       console.log('Botón de guardar clickeado');
       const datosCliente = obtenerDatosCliente();
+      alert('Datos del cliente: ' + JSON.stringify(datosCliente)); // AGREGADO PARA DEPURACIÓN EN CELULAR
       console.log('Datos del cliente a guardar:', datosCliente);
 
       if (validarCliente(datosCliente)) {
+        alert('Intentando guardar cliente...'); // AGREGADO PARA DEPURACIÓN EN CELULAR
         const resultado = await guardarCliente(datosCliente);
 
         if (resultado.success) {
@@ -487,6 +490,8 @@
         } else {
           alert('Error al guardar el cliente: ' + resultado.error);
         }
+      } else {
+        alert('Error de validación. Revisa los campos obligatorios.'); // AGREGADO PARA DEPURACIÓN EN CELULAR
       }
     });
 
