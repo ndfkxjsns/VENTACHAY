@@ -381,25 +381,41 @@
   </div>
 
   <script type="module">
+    alert('Script de Firebase cargado (INTENTO DE CORRECCIÓN)');
     import { initializeApp } from 'firebase/app';
     import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
     import { getAnalytics } from 'firebase/analytics';
 
     const firebaseConfig = {
-      apiKey: "TU_API_KEY", // Reemplaza con tu apiKey
-      authDomain: "TU_AUTH_DOMAIN.firebaseapp.com", // Reemplaza con tu authDomain
-      projectId: "TU_PROJECT_ID", // Reemplaza con tu projectId
-      storageBucket: "TU_STORAGE_BUCKET.appspot.com", // Reemplaza con tu storageBucket
-      messagingSenderId: "TU_MESSAGING_SENDER_ID", // Reemplaza con tu messagingSenderId
-      appId: "TU_APP_ID", // Reemplaza con tu appId
-      measurementId: "TU_MEASUREMENT_ID" // Reemplaza con tu measurementId (opcional)
+      apiKey: "TU_API_KEY", // ¡REEMPLAZA CON TU API KEY!
+      authDomain: "TU_AUTH_DOMAIN.firebaseapp.com", // ¡REEMPLAZA CON TU AUTH DOMAIN!
+      projectId: "TU_PROJECT_ID", // ¡REEMPLAZA CON TU PROJECT ID!
+      storageBucket: "TU_STORAGE_BUCKET.appspot.com", // ¡REEMPLAZA CON TU STORAGE BUCKET!
+      messagingSenderId: "TU_MESSAGING_SENDER_ID", // ¡REEMPLAZA CON TU MESSAGING SENDER ID!
+      appId: "TU_APP_ID", // ¡REEMPLAZA CON TU APP ID!
+      measurementId: "TU_MEASUREMENT_ID" // ¡REEMPLAZA CON TU MEASUREMENT ID (OPCIONAL)!
     };
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
+    let app;
+    try {
+      app = initializeApp(firebaseConfig);
+    } catch (error) {
+      alert('Error al inicializar Firebase: ' + error);
+      console.error('Error al inicializar Firebase:', error);
+    }
 
-    async function guardarCliente(clienteData) {
+    let db;
+    let analyticsInstance;
+    if (app) {
+      db = getFirestore(app);
+      analyticsInstance = getAnalytics(app);
+    }
+
+    window.guardarCliente = async (clienteData) => {
+      if (!db) {
+        alert('Firestore no se ha inicializado correctamente.');
+        return { success: false, error: 'Firestore no inicializado' };
+      }
       try {
         clienteData.fechaCreacion = serverTimestamp();
         const docRef = await addDoc(collection(db, 'clientes'), clienteData);
@@ -409,30 +425,30 @@
         console.error('❌ Error guardando cliente:', error);
         return { success: false, error: error.message };
       }
-    }
+    };
 
     function obtenerDatosCliente() {
       return {
         tipo: document.querySelector('input[name="tipo"]:checked')?.value || '',
-        codigo: document.getElementById('codigo').value,
-        nombreComercial: document.getElementById('nombre-comercial').value,
-        categoria: document.getElementById('categoria').value,
-        comentarios: document.getElementById('comentarios').value,
-        direccion: document.getElementById('direccion').value,
-        ciudad: document.getElementById('ciudad').value,
-        colonia: document.getElementById('colonia').value,
-        codigoPostal: document.getElementById('codigo-postal').value,
-        zona: document.getElementById('zona').value,
-        latitud: document.getElementById('latitud').value,
-        longitud: document.getElementById('longitud').value,
-        encargado: document.getElementById('encargado').value,
-        telefono: document.getElementById('telefono').value,
-        email: document.getElementById('email').value,
-        precio: parseFloat(document.getElementById('precio').value) || 0,
-        costo: parseFloat(document.getElementById('costo').value) || 0,
-        tipoPago: document.getElementById('tipo-pago').value,
-        diasCredito: parseInt(document.getElementById('dias-credito').value) || 0,
-        rfc: document.getElementById('rfc').value
+        codigo: document.getElementById('codigo')?.value || '',
+        nombreComercial: document.getElementById('nombre-comercial')?.value || '',
+        categoria: document.getElementById('categoria')?.value || '',
+        comentarios: document.getElementById('comentarios')?.value || '',
+        direccion: document.getElementById('direccion')?.value || '',
+        ciudad: document.getElementById('ciudad')?.value || '',
+        colonia: document.getElementById('colonia')?.value || '',
+        codigoPostal: document.getElementById('codigo-postal')?.value || '',
+        zona: document.getElementById('zona')?.value || '',
+        latitud: document.getElementById('latitud')?.value || '',
+        longitud: document.getElementById('longitud')?.value || '',
+        encargado: document.getElementById('encargado')?.value || '',
+        telefono: document.getElementById('telefono')?.value || '',
+        email: document.getElementById('email')?.value || '',
+        precio: parseFloat(document.getElementById('precio')?.value) || 0,
+        costo: parseFloat(document.getElementById('costo')?.value) || 0,
+        tipoPago: document.getElementById('tipo-pago')?.value || '',
+        diasCredito: parseInt(document.getElementById('dias-credito')?.value) || 0,
+        rfc: document.getElementById('rfc')?.value || ''
       };
     }
 
@@ -450,53 +466,76 @@
 
     function limpiarFormulario() {
       document.getElementById('nombre-comercial').value = '';
-      document.getElementById('telefono').value = '';
+          document.getElementById('telefono').value = '';
       document.getElementById('codigo').value = '';
-      document.querySelector('input[name="tipo"]:checked').checked = false;
-      document.getElementById('categoria').selectedIndex = 0;
-      document.getElementById('comentarios').value = '';
-      document.getElementById('direccion').value = '';
-      document.getElementById('ciudad').value = '';
-      document.getElementById('colonia').value = '';
-      document.getElementById('codigo-postal').value = '';
-      document.getElementById('zona').value = '';
-      document.getElementById('latitud').value = '';
-      document.getElementById('longitud').value = '';
-      document.getElementById('encargado').value = '';
-      document.getElementById('email').value = '';
-              document.getElementById('precio').value = '';
-      document.getElementById('costo').value = '';
-      document.getElementById('tipo-pago').selectedIndex = 0;
-      document.getElementById('dias-credito').value = '';
-      document.getElementById('rfc').value = '';
+      const tipoCliente = document.querySelector('input[name="tipo"]:checked');
+      if (tipoCliente) tipoCliente.checked = false;
+      const categoriaSelect = document.getElementById('categoria');
+      if (categoriaSelect) categoriaSelect.selectedIndex = 0;
+      const comentariosTextarea = document.getElementById('comentarios');
+      if (comentariosTextarea) comentariosTextarea.value = '';
+      const direccionInput = document.getElementById('direccion');
+      if (direccionInput) direccionInput.value = '';
+      const ciudadInput = document.getElementById('ciudad');
+      if (ciudadInput) ciudadInput.value = '';
+      const coloniaInput = document.getElementById('colonia');
+      if (coloniaInput) coloniaInput.value = '';
+      const codigoPostalInput = document.getElementById('codigo-postal');
+      if (codigoPostalInput) codigoPostalInput.value = '';
+      const zonaInput = document.getElementById('zona');
+      if (zonaInput) zonaInput.value = '';
+      const latitudInput = document.getElementById('latitud');
+      if (latitudInput) latitudInput.value = '';
+      const longitudInput = document.getElementById('longitud');
+      if (longitudInput) longitudInput.value = '';
+      const encargadoInput = document.getElementById('encargado');
+      if (encargadoInput) encargadoInput.value = '';
+      const emailInput = document.getElementById('email');
+      if (emailInput) emailInput.value = '';
+      const precioInput = document.getElementById('precio');
+      if (precioInput) precioInput.value = '';
+      const costoInput = document.getElementById('costo');
+      if (costoInput) costoInput.value = '';
+      const tipoPagoSelect = document.getElementById('tipo-pago');
+      if (tipoPagoSelect) tipoPagoSelect.selectedIndex = 0;
+      const diasCreditoInput = document.getElementById('dias-credito');
+      if (diasCreditoInput) diasCreditoInput.value = '';
+      const rfcInput = document.getElementById('rfc');
+      if (rfcInput) rfcInput.value = '';
     }
 
-    document.querySelector('.save-button').addEventListener('click', async function() {
-      alert('Botón de guardar clickeado'); // AGREGADO PARA DEPURACIÓN EN CELULAR
-      console.log('Botón de guardar clickeado');
-      const datosCliente = obtenerDatosCliente();
-      alert('Datos del cliente: ' + JSON.stringify(datosCliente)); // AGREGADO PARA DEPURACIÓN EN CELULAR
-      console.log('Datos del cliente a guardar:', datosCliente);
+    document.addEventListener('DOMContentLoaded', function() {
+      const saveButton = document.querySelector('.save-button');
+      if (saveButton) {
+        saveButton.addEventListener('click', async function() {
+          alert('Botón de guardar clickeado (CORRECCIÓN)');
+          console.log('Botón de guardar clickeado');
+          const datosCliente = obtenerDatosCliente();
+          alert('Datos del cliente: ' + JSON.stringify(datosCliente));
+          console.log('Datos del cliente a guardar:', datosCliente);
 
-      if (validarCliente(datosCliente)) {
-        alert('Intentando guardar cliente...'); // AGREGADO PARA DEPURACIÓN EN CELULAR
-        const resultado = await guardarCliente(datosCliente);
+          if (validarCliente(datosCliente)) {
+            alert('Intentando guardar cliente... (CORRECCIÓN)');
+            const resultado = await window.guardarCliente(datosCliente);
 
-        if (resultado.success) {
-          alert('Cliente guardado exitosamente con ID: ' + resultado.id);
-          limpiarFormulario();
-          // Opcional: redirigir a otra página
-          // window.location.href = 'BOTON-BUSCAR-CLIENTES.html';
-        } else {
-          alert('Error al guardar el cliente: ' + resultado.error);
-        }
+            if (resultado.success) {
+              alert('Cliente guardado exitosamente con ID: ' + resultado.id);
+              limpiarFormulario();
+            } else {
+              alert('Error al guardar el cliente: ' + resultado.error);
+            }
+          } else {
+            alert('Error de validación. Revisa los campos obligatorios.');
+          }
+        });
       } else {
-        alert('Error de validación. Revisa los campos obligatorios.'); // AGREGADO PARA DEPURACIÓN EN CELULAR
+        alert('Error: No se encontró el botón de guardar con la clase "save-button".');
+        console.error('Error: No se encontró el botón de guardar con la clase "save-button".');
       }
     });
 
-    // Evento para abrir el overlay al hacer clic en el menú hamburguesa
-    document.getElementById('hamburger-menu').addEventListener('click', function () {
+    // Evento para abrir el overlay al hacer clic en el menú hamburguesa (lo dejo igual)
+    document.getElementById('hamburger-menu')?.addEventListener('click', function () {
       const overlay = document.createElement('div');
       overlay.style.position = 'fixed';
       overlay.style.top = '0';
@@ -538,4 +577,3 @@
   </script>
 </body>
 </html>
-
