@@ -32,4 +32,4 @@ window.guardarCliente = async (clienteData) => {
   }
 };
 
-// (Otras funciones como enviarComando, etc., adaptadas si es necesario)
+// (Otras funciones como enviarComando, etc., irían aquí si las necesitas)
