@@ -1,223 +1,223 @@
-<!DOCTYPE html>  
-<html lang="es">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>Crear Cliente</title>  
-  <style>  
-    /* Estilos generales de la página */  
-    body {  
-      margin: 0;  
-      font-family: Arial, sans-serif;  
-      background-color: #f5f5f5;  
-      display: flex;  
-      flex-direction: column;  
-      height: 100vh;  
-      overflow: hidden;  
-    }  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Cliente</title>
+  <style>
+    /* Estilos generales de la página */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-    .top-bar {  
-      background-color: #fff;  
-      display: flex;  
-      align-items: center;  
-      justify-content: space-between;  
-      padding: 12px 15px;  
-      position: fixed;  
-      width: 100%;  
-      top: 0;  
-      left: 0;  
-      box-sizing: border-box;  
-      z-index: 1000;  
-    }  
+    .top-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
 
-    .menu-logo {  
-      display: flex;  
-      align-items: center;  
-      gap: 10px;  
-    }  
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    .menu-logo img {  
-      height: 32px;  
-    }  
+    .menu-logo img {
+      height: 32px;
+    }
 
-    .hamburger-menu {  
-      display: flex;  
-      flex-direction: column;  
-      justify-content: space-between;  
-      height: 20px;  
-      cursor: pointer;  
-    }  
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
 
-    .hamburger-menu div {  
-      width: 25px;  
-      height: 3px;  
-      background-color: #333;  
-      border-radius: 2px;  
-    }  
+    .hamburger-menu div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
 
-    .search-container {  
-      position: relative;  
-      display: flex;  
-      align-items: center;  
-      width: 50%;  
-    }  
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
 
-    .search-input {  
-      width: 100%;  
-      padding: 8px 10px;  
-      border: 1px solid #ccc;  
-      background: white;  
-      border-radius: 4px;  
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);  
-      outline: none;  
-    }  
+    .search-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      outline: none;
+    }
 
-    .search-input:focus {  
-      border-color: #FFA500;  
-    }  
+    .search-input:focus {
+      border-color: #FFA500;
+    }
 
-    .profile-icon {  
-      width: 32px;  
-      height: 32px;  
-      border-radius: 50%;  
-      background-color: #FFA500;  
-      display: flex;  
-      justify-content: center;  
-      align-items: center;  
-      font-weight: bold;  
-      color: #fff;  
-      font-size: 18px;  
-    }  
+    .profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #FFA500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 18px;
+    }
 
-    .second-bar {  
-      background-color: #fff;  
-      display: flex;  
-      align-items: center;  
-      justify-content: space-between;  
-      padding: 12px 15px;  
-      position: fixed;  
-      top: 55px;  
-      left: 0;  
-      right: 0;  
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);  
-      z-index: 999;  
-    }  
+    .second-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      right: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
 
-    .back-button {  
-      background-color: #FFA500;  
-      color: white;  
-      border: none;  
-      box-shadow: 0 0 6px rgba(0,0,0,0.2);  
-      padding: 10px 16px;  
-      border-radius: 6px;  
-      cursor: pointer;  
-      display: flex;  
-      align-items: center;  
-      justify-content: center;  
-      text-decoration: none;  
-      font-size: 18px;  
-    }  
+    .back-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 18px;
+    }
 
-    .back-button:hover {  
-      background-color: #e69500;  
-    }  
+    .back-button:hover {
+      background-color: #e69500;
+    }
 
-    .back-button i {  
-      margin-right: 8px;  
-      font-size: 18px;  
-    }  
+    .back-button i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
 
-    .title {  
-      font-weight: bold;  
-      font-size: 18px;  
-      display: flex;  
-      align-items: center;  
-      gap: 10px;  
-    }  
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-    .save-button {  
-      background-color: #FFA500;  
-      color: white;  
-      border: none;  
-      box-shadow: 0 0 6px rgba(0,0,0,0.2);  
-      padding: 10px 16px;  
-      border-radius: 6px;  
-      cursor: pointer;  
-      display: flex;  
-      align-items: center;  
-      font-size: 18px;  
-    }  
+    .save-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+    }
 
-    .main-container {  
-      margin-top: 120px;  
-      padding: 20px;  
-      overflow: auto;  
-      flex-grow: 1;  
-    }  
+    .main-container {
+      margin-top: 120px;
+      padding: 20px;
+      overflow: auto;
+      flex-grow: 1;
+    }
 
-    .info-bar {  
-      background-color: transparent;  
-      display: flex;  
-      align-items: center;  
-      justify-content: center;  
-      height: 40px;  
-      font-weight: bold;  
-      color: #333;  
-      border-radius: 5px;  
-      margin-bottom: 20px;  
-      text-align: center;  
-    }  
+    .info-bar {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      font-weight: bold;
+      color: #333;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-    .form-background {  
-      background-color: #fff;  
-      border-radius: 15px;  
-      padding: 25px;  
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
-      margin-bottom: 20px;  
-    }  
+    .form-background {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
 
-    .form-container {  
-      display: flex;  
-      flex-direction: column;  
-      gap: 15px;  
-      width: 100%;  
-      max-width: 600px;  
-      margin: 0 auto;  
-    }  
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-    .form-container label {  
-      font-weight: bold;  
-      color: #333;  
-    }  
+    .form-container label {
+      font-weight: bold;
+      color: #333;
+    }
 
-    .form-container input, .form-container select, .form-container textarea {  
-      padding: 8px;  
-      border: 1px solid #ccc;  
-      border-radius: 4px;  
-      width: 100%;  
-      box-sizing: border-box;  
-    }  
+    .form-container input, .form-container select, .form-container textarea {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-    .radio-group {  
-      display: flex;  
-      align-items: center;  
-      gap: 20px;  
-    }  
+    .radio-group {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
 
-    .radio-group label {  
-      display: flex;  
-      align-items: center;  
-      gap: 8px;  
-      font-weight: normal;  
-    }  
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: normal;
+    }
 
-    .google-map {  
-      width: 100%;  
-      height: 300px;  
-      margin-top: 15px;  
-      border: 1px solid #ccc;  
-      border-radius: 5px;  
-    }  
+    .google-map {
+      width: 100%;
+      height: 300px;
+      margin-top: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 /* Animaciones del overlay */
   .overlay-hidden {
     transform: translateX(-100%);
@@ -233,274 +233,290 @@
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
   }
-  </style>  
-</head>  
-<body>  
-  <div class="top-bar">  
-    <div class="menu-logo">  
-      <img src="logo.jpg" alt="Logo" />  
-      <div class="hamburger-menu" id="hamburger-menu">  
-        <div></div>  
-        <div></div>  
-        <div></div>  
-      </div>  
-    </div>  
-    <div class="search-container">  
-      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">  
-    </div>  
-    <div class="profile-icon">U</div>  
-  </div>  
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="menu-logo">
+      <img src="logo.jpg" alt="Logo" />
+      <div class="hamburger-menu" id="hamburger-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">
+    </div>
+    <div class="profile-icon">U</div>
+  </div>
 
-  <div class="second-bar">  
-    <div class="title">  
-<a href="BOTON-BUSCAR-CLIENTES.html" class="back-button">  
-  <i>←</i>  
-</a>  
-      Crear cliente  
-    </div>  
-    <button class="save-button"><i>✔</i></button>  
-  </div>  
+  <div class="second-bar">
+    <div class="title">
+      <a href="BOTON-BUSCAR-CLIENTES.html" class="back-button">
+        <i>←</i>
+      </a>
+        Crear cliente
+    </div>
+    <button class="save-button"><i>✔</i></button>
+  </div>
 
-  <div class="main-container">  
-    <!-- Información General -->  
-    <div class="info-bar">Información General</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <div class="radio-group">  
-          <label for="cliente">  
-            <input type="radio" id="cliente" name="tipo" value="cliente">  
-            Cliente  
-          </label>  
-          <label for="prospecto">  
-            <input type="radio" id="prospecto" name="tipo" value="prospecto">  
-            Prospecto  
-          </label>  
-        </div>  
+  <div class="main-container">
+    <div class="info-bar">Información General</div>
+    <div class="form-background">
+      <div class="form-container">
+        <div class="radio-group">
+          <label for="cliente">
+            <input type="radio" id="cliente" name="tipo" value="cliente">
+            Cliente
+          </label>
+          <label for="prospecto">
+            <input type="radio" id="prospecto" name="tipo" value="prospecto">
+            Prospecto
+          </label>
+        </div>
 
-        <label for="codigo">Código:</label>  
-        <input type="text" id="codigo" placeholder="Ingresa el código del cliente">  
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" placeholder="Ingresa el código del cliente">
 
-        <label for="nombre-comercial">Nombre Comercial:</label>  
-        <input type="text" id="nombre-comercial" placeholder="Ingresa el nombre comercial del cliente">  
+        <label for="nombre-comercial">Nombre Comercial:</label>
+        <input type="text" id="nombre-comercial" placeholder="Ingresa el nombre comercial del cliente">
 
-        <label for="categoria">Categoría:</label>  
-        <select id="categoria">  
-          <option value="quincenal">Quincenal</option>  
-          <option value="semanal">Semanal</option>  
-        </select>  
+        <label for="categoria">Categoría:</label>
+        <select id="categoria">
+          <option value="quincenal">Quincenal</option>
+          <option value="semanal">Semanal</option>
+        </select>
 
-        <label for="comentarios">Comentarios:</label>  
-        <textarea id="comentarios" placeholder="Ingresa comentarios adicionales"></textarea>  
-      </div>  
-    </div>  
+        <label for="comentarios">Comentarios:</label>
+        <textarea id="comentarios" placeholder="Ingresa comentarios adicionales"></textarea>
+      </div>
+    </div>
 
-    <!-- Dirección y Localización -->  
-    <div class="info-bar">Dirección y Localización</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <label for="direccion">Dirección:</label>  
-        <input type="text" id="direccion" placeholder="Ingresa la dirección">  
+    <div class="info-bar">Dirección y Localización</div>
+    <div class="form-background">
+      <div class="form-container">
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" placeholder="Ingresa la dirección">
 
-        <label for="ciudad">Ciudad:</label>  
-        <input type="text" id="ciudad" placeholder="Ingresa la ciudad">  
+        <label for="ciudad">Ciudad:</label>
+        <input type="text" id="ciudad" placeholder="Ingresa la ciudad">
 
-        <label for="colonia">Colonia:</label>  
-        <input type="text" id="colonia" placeholder="Ingresa la colonia">  
+        <label for="colonia">Colonia:</label>
+        <input type="text" id="colonia" placeholder="Ingresa la colonia">
 
-        <label for="codigo-postal">Código Postal:</label>  
-        <input type="text" id="codigo-postal" placeholder="Ingresa el código postal">  
+        <label for="codigo-postal">Código Postal:</label>
+        <input type="text" id="codigo-postal" placeholder="Ingresa el código postal">
 
-        <label for="zona">Zona:</label>  
-        <input type="text" id="zona" placeholder="Ingresa la zona">  
+        <label for="zona">Zona:</label>
+        <input type="text" id="zona" placeholder="Ingresa la zona">
 
-        <label for="latitud">Latitud:</label>  
-        <input type="text" id="latitud" placeholder="Ingresa la latitud">  
+        <label for="latitud">Latitud:</label>
+        <input type="text" id="latitud" placeholder="Ingresa la latitud">
 
-        <label for="longitud">Longitud:</label>  
-        <input type="text" id="longitud" placeholder="Ingresa la longitud">  
+        <label for="longitud">Longitud:</label>
+        <input type="text" id="longitud" placeholder="Ingresa la longitud">
 
-        <div class="google-map">  
-          <iframe  
-            id="google-map-frame"  
-            width="100%"  
-            height="100%"  
-            frameborder="0"  
-            style="border:0"  
-            allowfullscreen  
-            src="https://www.google.com/maps/embed/v1/place?q=0,0&key=YOUR_GOOGLE_MAPS_API_KEY">  
-          </iframe>  
-        </div>  
-      </div>  
-    </div>  
+        <div class="google-map">
+          <iframe
+            id="google-map-frame"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            style="border:0"
+            allowfullscreen
+            src="https://www.google.com/maps/embed/v1/place?q=0,0&key=YOUR_GOOGLE_MAPS_API_KEY">
+          </iframe>
+        </div>
+      </div>
+    </div>
 
-    <!-- Datos de Contacto -->  
-    <div class="info-bar">Datos de Contacto</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <label for="telefono">Encargado:</label>  
-        <input type="tel" id="telefono" placeholder="Ingresa el teléfono">  
+    <div class="info-bar">Datos de Contacto</div>
+    <div class="form-background">
+      <div class="form-container">
+        <label for="telefono">Encargado:</label>
+        <input type="tel" id="telefono" placeholder="Ingresa el teléfono">
 
-        <label for="email">Teléfono:</label>  
-        <input type="email" id="email" placeholder="Ingresa el correo electrónico">  
+        <label for="email">Teléfono:</label>
+        <input type="email" id="email" placeholder="Ingresa el correo electrónico">
 
-        <label for="encargado">Correo electronico:</label>  
-        <input type="text" id="encargado" placeholder="Ingresa el encargado">  
-      </div>  
-    </div>  
+        <label for="encargado">Correo electronico:</label>
+        <input type="text" id="encargado" placeholder="Ingresa el encargado">
+      </div>
+    </div>
 
-    <!-- Precio y Costo -->  
-    <div class="info-bar">Precio y Costo</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <label for="precio">Precio:</label>  
-        <input type="number" id="precio" placeholder="Ingresa el precio">  
+    <div class="info-bar">Precio y Costo</div>
+    <div class="form-background">
+      <div class="form-container">
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" placeholder="Ingresa el precio">
 
-        <label for="costo">Costo:</label>  
-        <input type="number" id="costo" placeholder="Ingresa el costo">  
-      </div>  
-    </div>  
+        <label for="costo">Costo:</label>
+        <input type="number" id="costo" placeholder="Ingresa el costo">
+      </div>
+    </div>
 
-    <!-- Pago, Venta y Crédito -->  
-    <div class="info-bar">Pago, Venta y Crédito</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <label for="tipo-pago">Tipo de Pago:</label>  
-        <select id="tipo-pago">  
-          <option value="contado">Contado</option>  
-          <option value="credito">Crédito</option>  
-          <option value="contado-credito">Contado y Crédito</option>  
-        </select>  
+    <div class="info-bar">Pago, Venta y Crédito</div>
+    <div class="form-background">
+      <div class="form-container">
+        <label for="tipo-pago">Tipo de Pago:</label>
+        <select id="tipo-pago">
+          <option value="contado">Contado</option>
+          <option value="credito">Crédito</option>
+          <option value="contado-credito">Contado y Crédito</option>
+        </select>
 
-        <label for="dias-credito">Días de Crédito:</label>  
-        <input type="number" id="dias-credito" placeholder="Ingresa los días de crédito">  
-      </div>  
-    </div>  
+        <label for="dias-credito">Días de Crédito:</label>
+        <input type="number" id="dias-credito" placeholder="Ingresa los días de crédito">
+      </div>
+    </div>
 
-    <!-- Datos Fiscales -->  
-    <div class="info-bar">Datos Fiscales</div>  
-    <div class="form-background">  
-      <div class="form-container">  
-        <label for="rfc">RFC:</label>  
-        <input type="text" id="rfc" placeholder="Ingresa el RFC">  
-      </div>  
-    </div>  
-  </div>  
-  
-  <script>
- 
-  // Función para cerrar el overlay con animación
-  function closeOverlay() {
-    const overlay = document.querySelector('body > div[style*="z-index: 10000"]'); // Seleccionar el overlay
-    if (overlay) {
-      // Iniciar animación de cierre
-      overlay.classList.remove('overlay-visible');
-      overlay.classList.add('overlay-closing');
+    <div class="info-bar">Datos Fiscales</div>
+    <div class="form-background">
+      <div class="form-container">
+        <label for="rfc">RFC:</label>
+        <input type="text" id="rfc" placeholder="Ingresa el RFC">
+      </div>
+    </div>
+  </div>
 
-      // Esperar a que la animación termine antes de eliminar el overlay
-      setTimeout(() => {
-        document.body.removeChild(overlay);
-      }, 300); // Coincide con el tiempo definido en CSS (0.3s)
-    }
-  }
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-  // Evento para abrir el overlay al hacer clic en el menú hamburguesa
-  document.getElementById('hamburger-menu').addEventListener('click', function () {
-    // Crear el overlay
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    overlay.style.zIndex = '10000';
-    overlay.style.display = 'flex';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.classList.add('overlay-hidden'); // Inicia fuera de la pantalla
-
-    const iframe = document.createElement('iframe');
-    iframe.src = 'index.html'; // Ruta del archivo iframe
-    iframe.style.width = '100%';
-    iframe.style.height = '100%';
-    iframe.style.border = 'none';
-    overlay.appendChild(iframe);
-
-    // Añadir el overlay al DOM
-    document.body.appendChild(overlay);
-
-    // Activar la animación de apertura
-    setTimeout(() => {
-      overlay.classList.remove('overlay-hidden');
-      overlay.classList.add('overlay-visible');
-    }, 10);
-  });
-    <!-- Añade esto en el head de tu HTML, después de los estilos -->
-<script type="module" src="firebase.js"></script>
-<script>
-  // Función para obtener los datos del formulario
-  function obtenerDatosCliente() {
-    return {
-      tipo: document.querySelector('input[name="tipo"]:checked')?.value || '',
-      codigo: document.getElementById('codigo').value,
-      nombreComercial: document.getElementById('nombre-comercial').value,
-      categoria: document.getElementById('categoria').value,
-      comentarios: document.getElementById('comentarios').value,
-      direccion: document.getElementById('direccion').value,
-      ciudad: document.getElementById('ciudad').value,
-      colonia: document.getElementById('colonia').value,
-      codigoPostal: document.getElementById('codigo-postal').value,
-      zona: document.getElementById('zona').value,
-      latitud: document.getElementById('latitud').value,
-      longitud: document.getElementById('longitud').value,
-      encargado: document.getElementById('encargado').value,
-      telefono: document.getElementById('telefono').value,
-      email: document.getElementById('email').value,
-      precio: parseFloat(document.getElementById('precio').value) || 0,
-      costo: parseFloat(document.getElementById('costo').value) || 0,
-      tipoPago: document.getElementById('tipo-pago').value,
-      diasCredito: parseInt(document.getElementById('dias-credito').value) || 0,
-      rfc: document.getElementById('rfc').value
+    const firebaseConfig = {
+      apiKey: "AIzaSyAg5z1F4Dx6z9x0VHrBc45gnzgBm0Sa65s", // Reemplaza con tu apiKey
+      authDomain: "tc-1-81110.firebaseapp.com", // Reemplaza con tu authDomain
+      projectId: "tc-1-81110", // Reemplaza con tu projectId
+      storageBucket: "tc-1-81110.appspot.com", // Reemplaza con tu storageBucket
+      messagingSenderId: "1020958300613", // Reemplaza con tu messagingSenderId
+      appId: "1:1020958300613:web:0f95e201916b1c5ea153ac" // Reemplaza con tu appId
     };
-  }
 
-  // Función para validar los datos antes de guardar
-  function validarCliente(datos) {
-    if (!datos.nombreComercial) {
-      alert('El nombre comercial es obligatorio');
-      return false;
-    }
-    if (!datos.telefono) {
-      alert('El teléfono es obligatorio');
-      return false;
-    }
-    return true;
-  }
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // Función para limpiar el formulario después de guardar
-  function limpiarFormulario() {
-    document.getElementById('nombre-comercial').value = '';
-    document.getElementById('telefono').value = '';
-    // Limpia los demás campos según sea necesario
-  }
-
-  // Evento para el botón de guardar
-  document.querySelector('.save-button').addEventListener('click', async function() {
-    const datosCliente = obtenerDatosCliente();
-    
-    if (validarCliente(datosCliente)) {
-      const resultado = await guardarCliente(datosCliente);
-      
-      if (resultado.success) {
-        alert('Cliente guardado exitosamente');
-        limpiarFormulario();
-        // Opcional: redirigir a otra página
-        // window.location.href = 'BOTON-BUSCAR-CLIENTES.html';
-      } else {
-        alert('Error al guardar el cliente: ' + resultado.error);
+    async function guardarCliente(clienteData) {
+      try {
+        clienteData.fechaCreacion = serverTimestamp();
+        const docRef = await addDoc(collection(db, "clientes"), clienteData);
+        console.log("✅ Cliente guardado con ID:", docRef.id);
+        return { success: true, id: docRef.id };
+      } catch (error) {
+        console.error("❌ Error guardando cliente:", error);
+        return { success: false, error: error.message };
       }
     }
-  });
-</script>
-</body>  
+
+    function obtenerDatosCliente() {
+      return {
+        tipo: document.querySelector('input[name="tipo"]:checked')?.value || '',
+        codigo: document.getElementById('codigo').value,
+        nombreComercial: document.getElementById('nombre-comercial').value,
+        categoria: document.getElementById('categoria').value,
+        comentarios: document.getElementById('comentarios').value,
+        direccion: document.getElementById('direccion').value,
+        ciudad: document.getElementById('ciudad').value,
+        colonia: document.getElementById('colonia').value,
+        codigoPostal: document.getElementById('codigo-postal').value,
+        zona: document.getElementById('zona').value,
+        latitud: document.getElementById('latitud').value,
+        longitud: document.getElementById('longitud').value,
+        encargado: document.getElementById('encargado').value,
+        telefono: document.getElementById('telefono').value,
+        email: document.getElementById('email').value,
+        precio: parseFloat(document.getElementById('precio').value) || 0,
+        costo: parseFloat(document.getElementById('costo').value) || 0,
+        tipoPago: document.getElementById('tipo-pago').value,
+        diasCredito: parseInt(document.getElementById('dias-credito').value) || 0,
+        rfc: document.getElementById('rfc').value
+      };
+    }
+
+    function validarCliente(datos) {
+      if (!datos.nombreComercial) {
+        alert('El nombre comercial es obligatorio');
+        return false;
+      }
+      if (!datos.telefono) {
+        alert('El teléfono es obligatorio');
+        return false;
+      }
+      return true;
+    }
+
+    function limpiarFormulario() {
+      document.getElementById('nombre-comercial').value = '';
+      document.getElementById('telefono').value = '';
+      // Limpia los demás campos según sea necesario
+    }
+
+    document.querySelector('.save-button').addEventListener('click', async function() {
+      console.log('Botón de guardar clickeeado');
+      const datosCliente = obtenerDatosCliente();
+      console.log('Datos del cliente a guardar:', datosCliente);
+
+      if (validarCliente(datosCliente)) {
+        const resultado = await guardarCliente(datosCliente);
+
+        if (resultado.success) {
+          alert('Cliente guardado exitosamente con ID: ' + resultado.id);
+          limpiarFormulario();
+          // Opcional: redirigir a otra página
+          // window.location.href = 'BOTON-BUSCAR-CLIENTES.html';
+        } else {
+          alert('Error al guardar el cliente: ' + resultado.error);
+        }
+      }
+    });
+
+    // Evento para abrir el overlay al hacer clic en el menú hamburguesa
+    document.getElementById('hamburger-menu').addEventListener('click', function () {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+      overlay.style.zIndex = '10000';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.classList.add('overlay-hidden');
+
+      const iframe = document.createElement('iframe');
+      iframe.src = 'index.html';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      overlay.appendChild(iframe);
+
+      document.body.appendChild(overlay);
+
+      setTimeout(() => {
+        overlay.classList.remove('overlay-hidden');
+        overlay.classList.add('overlay-visible');
+      }, 10);
+    });
+
+    function closeOverlay() {
+      const overlay = document.querySelector('body > div[style*="z-index: 10000"]');
+      if (overlay) {
+        overlay.classList.remove('overlay-visible');
+        overlay.classList.add('overlay-closing');
+        setTimeout(() => {
+          document.body.removeChild(overlay);
+        }, 300);
+      }
+    }
+  </script>
+</body>
 </html>
+
+    
