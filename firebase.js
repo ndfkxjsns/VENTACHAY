@@ -1,8 +1,15 @@
 // ▼ Importa los servicios de Firebase que necesitas (SDK v10+)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  collection, 
+  addDoc,
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// ▼ Configuración de tu proyecto (¡cambia estos valores por los tuyos!)
+// ▼ Configuración de tu proyecto
 const firebaseConfig = {
   apiKey: "AIzaSyAg5z1F4Dx6z9x0VHrBc45gnzgBm0Sa65s",
   authDomain: "tc-1-81110.firebaseapp.com",
@@ -27,5 +34,21 @@ window.enviarComando = async (accion) => {
     console.log("🔥 Comando enviado:", accion);
   } catch (error) {
     console.error("❌ Error enviando comando:", error);
+  }
+};
+
+// ▼ Función para guardar un nuevo cliente
+window.guardarCliente = async (clienteData) => {
+  try {
+    // Añade timestamp de creación
+    clienteData.fechaCreacion = serverTimestamp();
+    
+    // Guarda en la colección "clientes"
+    const docRef = await addDoc(collection(db, "clientes"), clienteData);
+    console.log("✅ Cliente guardado con ID:", docRef.id);
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error("❌ Error guardando cliente:", error);
+    return { success: false, error: error.message };
   }
 };
