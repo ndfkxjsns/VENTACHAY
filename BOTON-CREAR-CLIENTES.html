@@ -435,6 +435,72 @@
       overlay.classList.add('overlay-visible');
     }, 10);
   });
+    <!-- Añade esto en el head de tu HTML, después de los estilos -->
+<script type="module" src="firebase.js"></script>
+<script>
+  // Función para obtener los datos del formulario
+  function obtenerDatosCliente() {
+    return {
+      tipo: document.querySelector('input[name="tipo"]:checked')?.value || '',
+      codigo: document.getElementById('codigo').value,
+      nombreComercial: document.getElementById('nombre-comercial').value,
+      categoria: document.getElementById('categoria').value,
+      comentarios: document.getElementById('comentarios').value,
+      direccion: document.getElementById('direccion').value,
+      ciudad: document.getElementById('ciudad').value,
+      colonia: document.getElementById('colonia').value,
+      codigoPostal: document.getElementById('codigo-postal').value,
+      zona: document.getElementById('zona').value,
+      latitud: document.getElementById('latitud').value,
+      longitud: document.getElementById('longitud').value,
+      encargado: document.getElementById('encargado').value,
+      telefono: document.getElementById('telefono').value,
+      email: document.getElementById('email').value,
+      precio: parseFloat(document.getElementById('precio').value) || 0,
+      costo: parseFloat(document.getElementById('costo').value) || 0,
+      tipoPago: document.getElementById('tipo-pago').value,
+      diasCredito: parseInt(document.getElementById('dias-credito').value) || 0,
+      rfc: document.getElementById('rfc').value
+    };
+  }
+
+  // Función para validar los datos antes de guardar
+  function validarCliente(datos) {
+    if (!datos.nombreComercial) {
+      alert('El nombre comercial es obligatorio');
+      return false;
+    }
+    if (!datos.telefono) {
+      alert('El teléfono es obligatorio');
+      return false;
+    }
+    return true;
+  }
+
+  // Función para limpiar el formulario después de guardar
+  function limpiarFormulario() {
+    document.getElementById('nombre-comercial').value = '';
+    document.getElementById('telefono').value = '';
+    // Limpia los demás campos según sea necesario
+  }
+
+  // Evento para el botón de guardar
+  document.querySelector('.save-button').addEventListener('click', async function() {
+    const datosCliente = obtenerDatosCliente();
+    
+    if (validarCliente(datosCliente)) {
+      const resultado = await guardarCliente(datosCliente);
+      
+      if (resultado.success) {
+        alert('Cliente guardado exitosamente');
+        limpiarFormulario();
+        // Opcional: redirigir a otra página
+        // window.location.href = 'BOTON-BUSCAR-CLIENTES.html';
+      } else {
+        alert('Error al guardar el cliente: ' + resultado.error);
+      }
+    }
+  });
 </script>
 </body>  
 </html>
