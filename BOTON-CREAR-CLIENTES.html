@@ -381,34 +381,32 @@
   </div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { initializeApp } from 'firebase/app';
+    import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
+    import { getAnalytics } from 'firebase/analytics';
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAg5z1F4Dx6z9x0VHrBc45gnzgBm0Sa65s", // Reemplaza con tu apiKey
-      authDomain: "tc-1-81110.firebaseapp.com", // Reemplaza con tu authDomain
-      projectId: "tc-1-81110", // Reemplaza con tu projectId
-      storageBucket: "tc-1-81110.appspot.com", // Reemplaza con tu storageBucket
-      messagingSenderId: "1020958300613", // Reemplaza con tu messagingSenderId
-      appId: "1:1020958300613:web:0f95e201916b1c5ea153ac" // Reemplaza con tu appId
+      apiKey: "TU_API_KEY", // Reemplaza con tu apiKey
+      authDomain: "TU_AUTH_DOMAIN.firebaseapp.com", // Reemplaza con tu authDomain
+      projectId: "TU_PROJECT_ID", // Reemplaza con tu projectId
+      storageBucket: "TU_STORAGE_BUCKET.appspot.com", // Reemplaza con tu storageBucket
+      messagingSenderId: "TU_MESSAGING_SENDER_ID", // Reemplaza con tu messagingSenderId
+      appId: "TU_APP_ID", // Reemplaza con tu appId
+      measurementId: "TU_MEASUREMENT_ID" // Reemplaza con tu measurementId (opcional)
     };
 
     const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
     const db = getFirestore(app);
 
     async function guardarCliente(clienteData) {
       try {
         clienteData.fechaCreacion = serverTimestamp();
-        const docRef = await addDoc(collection(db, "clientes"), clienteData);
-        console.log("✅ Cliente guardado con ID:", docRef.id);
+        const docRef = await addDoc(collection(db, 'clientes'), clienteData);
+        console.log('✅ Cliente guardado con ID:', docRef.id);
         return { success: true, id: docRef.id };
       } catch (error) {
-        console.error("❌ Error guardando cliente:", error);
+        console.error('❌ Error guardando cliente:', error);
         return { success: false, error: error.message };
       }
     }
@@ -453,11 +451,28 @@
     function limpiarFormulario() {
       document.getElementById('nombre-comercial').value = '';
       document.getElementById('telefono').value = '';
-      // Limpia los demás campos según sea necesario
+      document.getElementById('codigo').value = '';
+      document.querySelector('input[name="tipo"]:checked').checked = false;
+      document.getElementById('categoria').selectedIndex = 0;
+      document.getElementById('comentarios').value = '';
+      document.getElementById('direccion').value = '';
+      document.getElementById('ciudad').value = '';
+      document.getElementById('colonia').value = '';
+      document.getElementById('codigo-postal').value = '';
+      document.getElementById('zona').value = '';
+      document.getElementById('latitud').value = '';
+      document.getElementById('longitud').value = '';
+      document.getElementById('encargado').value = '';
+      document.getElementById('email').value = '';
+              document.getElementById('precio').value = '';
+      document.getElementById('costo').value = '';
+      document.getElementById('tipo-pago').selectedIndex = 0;
+      document.getElementById('dias-credito').value = '';
+      document.getElementById('rfc').value = '';
     }
 
     document.querySelector('.save-button').addEventListener('click', async function() {
-      console.log('Botón de guardar clickeeado');
+      console.log('Botón de guardar clickeado');
       const datosCliente = obtenerDatosCliente();
       console.log('Datos del cliente a guardar:', datosCliente);
 
@@ -519,4 +534,3 @@
 </body>
 </html>
 
-    
