@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crear Categoría</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
+
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-logo img {
+      height: 32px;
+    }
+
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger-menu div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #FFA500;
+    }
+
+    .profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #FFA500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .second-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      right: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .form-container {
+      margin-top: 120px;
+      width: 90%;
+      max-width: 500px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-container label {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .form-container input[type="text"],
+    .form-container select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container select:focus {
+      border-color: #FFA500;
+    }
+
+    .form-container button {
+      background-color: #FFA500;
+      color: white;
+      font-size: 16px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .form-container button:hover {
+      background-color: #e69500;
+    }
+  /* Animación inicial - fuera de pantalla (izquierda) */
+    .overlay-hidden {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Posición visible */
+    .overlay-visible {
+      transform: translateX(0);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Animación de cierre - fuera de pantalla (derecha) */
+    .overlay-closing {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="menu-logo">
+      <img src="logo.jpg" alt="Logo" />
+      <div class="hamburger-menu" id="hamburger-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">
+    </div>
+    <div class="profile-icon">U</div>
+  </div>
+
+  <div class="second-bar">
+    <div class="title">
+      Crear categoría
+    </div>
+  </div>
+
+  <div class="form-container">
+    <label for="description">Descripción</label>
+    <input type="text" id="description" placeholder="Ingresa la descripción">
+
+    <label for="form">Formulario</label>
+    <select id="form">
+      <option value="" disabled selected>Selecciona un formulario</option>
+      <option value="form1">Formulario 1</option>
+      <option value="form2">Formulario 2</option>
+      <option value="none">Ninguno</option>
+    </select>
+
+    <button id="createButton">Crear</button>
+  </div>
+
+  <script>
+  
+  // Función para cerrar el overlay con animación
+    function closeOverlay() {
+      const overlay = document.querySelector('body > div[style*="z-index: 10000"]'); // Seleccionar el overlay
+      if (overlay) {
+        // Iniciar animación de cierre
+        overlay.classList.remove('overlay-visible');
+        overlay.classList.add('overlay-closing');
+
+        // Esperar a que la animación termine antes de eliminar el overlay
+        setTimeout(() => {
+          document.body.removeChild(overlay);
+        }, 300); // Coincide con el tiempo definido en CSS (0.3s)
+      }
+    }
+
+    // Evento para abrir el overlay al hacer clic en el menú hamburguesa
+    document.getElementById('hamburger-menu').addEventListener('click', function () {
+      // Crear el overlay
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+      overlay.style.zIndex = '10000';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.classList.add('overlay-hidden'); // Inicia fuera de la pantalla
+
+      const iframe = document.createElement('iframe');
+      iframe.src = 'SERVIDOR-MENU.html'; // Ruta del archivo iframe
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      overlay.appendChild(iframe);
+
+      // Añadir el overlay al DOM
+      document.body.appendChild(overlay);
+
+      // Activar la animación de apertura
+      setTimeout(() => {
+        overlay.classList.remove('overlay-hidden');
+        overlay.classList.add('overlay-visible');
+      }, 10);
+    });
+    
+  
+    document.getElementById('createButton').addEventListener('click', function () {
+      const description = document.getElementById('description').value;
+      const form = document.getElementById('form').value;
+
+      if (!description || !form) {
+        alert('Por favor, completa todos los campos antes de continuar.');
+        return;
+      }
+
+      alert(`Categoría creada con:\nDescripción: ${description}\nFormulario: ${form}`);
+    });
+  </script>
+</body>
+</html>

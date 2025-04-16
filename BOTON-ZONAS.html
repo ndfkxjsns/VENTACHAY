@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encabezados con Tabla</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
+
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-logo img {
+      height: 32px;
+    }
+
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger-menu div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #FFA500;
+    }
+
+    .profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #FFA500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .second-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      right: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .title span {
+      font-size: 16px;
+      color: gray;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 120px 20px 10px;
+    }
+
+    .create-zone-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .create-zone-button:hover {
+      background-color: #e69500;
+    }
+
+    .map-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-button:hover {
+      background-color: #e69500;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 5px 0;
+      z-index: 1000;
+      width: 220px;
+      display: none;
+    }
+
+    .dropdown-option {
+      background-color: transparent;
+      border: none;
+      padding: 10px 15px;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .dropdown-option:hover {
+      background-color: #f5f5f5;
+    }
+
+    .search-zones {
+      margin: 10px 20px;
+      width: calc(300px + 10px);
+    }
+
+    .search-zones input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-zones input:focus {
+      border-color: #FFA500;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+
+    .download-button {
+      background-color: #e0e0e0;
+      color: black;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .download-button:hover {
+      background-color: #d6d6d6;
+    }
+
+    .table-container {
+      margin: 100px auto 0;
+      width: 90%;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: auto;
+    }
+
+    thead {
+      background-color: #FFA500;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #ddd;
+      word-wrap: break-word;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+
+    tbody tr:hover {
+      background-color: #eaeaea;
+    }
+
+    .color-box {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .status-yes {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-no {
+      color: red;
+      font-weight: bold;
+    }
+
+    .action-buttons-table button {
+      background-color: #FF6347;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .action-buttons-table button:hover {
+      background-color: #FF4500;
+    }
+  /* Animaciones del overlay */
+  .overlay-hidden {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .overlay-visible {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .overlay-closing {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="menu-logo">
+      <img src="logo.jpg" alt="Logo" />
+      <div class="hamburger-menu" id="hamburger-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">
+    </div>
+    <div class="profile-icon">U</div>
+  </div>
+
+  <div class="second-bar">
+    <div class="title">
+      Zonas <span>(Total: 123)</span>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <div class="dropdown">
+      <button class="create-zone-button" id="createZoneButton">Agregar nuevo</button>
+      <div class="dropdown-content" id="dropdownContent">
+        <button class="dropdown-option">Crear nueva zona</button>
+        <button class="dropdown-option">Crear o editar con plantilla de Excel</button>
+      </div>
+    </div>
+    <button class="map-button">Mapa</button>
+  </div>
+
+  <div class="search-zones">
+    <input type="text" id="searchZones" placeholder="Buscar zonas...">
+  </div>
+  <div class="checkbox-container">
+    <input type="checkbox" id="showDisabled">
+    <label for="showDisabled">Mostrar deshabilitados</label>
+    <button class="download-button">
+      Descargar
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Color</th>
+          <th>Descripción</th>
+          <th>Usuarios</th>
+          <th>Habilitada</th>
+          <th>Clientes habilitados</th>
+          <th>Prospectos habilitados</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="color-box" style="background-color: #FFA500;"></span></td>
+          <td>Zona Norte</td>
+          <td>15</td>
+          <td class="status-yes">Sí</td>
+          <td>30</td>
+          <td>10</td>
+          <td class="action-buttons-table">
+            <button>Deshabilitar clientes</button>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="color-box" style="background-color: #00BFFF;"></span></td>
+          <td>Zona Sur</td>
+          <td>12</td>
+          <td class="status-no">No</td>
+          <td>25</td>
+          <td>8</td>
+          <td class="action-buttons-table">
+            <button>Deshabilitar clientes</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ 
+  <script>
+  // Función para cerrar el overlay con animación
+  function closeOverlay() {
+    const overlay = document.querySelector('body > div[style*="z-index: 10000"]'); // Seleccionar el overlay
+    if (overlay) {
+      // Iniciar animación de cierre
+      overlay.classList.remove('overlay-visible');
+      overlay.classList.add('overlay-closing');
+
+      // Esperar a que la animación termine antes de eliminar el overlay
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+      }, 300); // Coincide con el tiempo definido en CSS (0.3s)
+    }
+  }
+
+  // Evento para abrir el overlay al hacer clic en el menú hamburguesa
+  document.getElementById('hamburger-menu').addEventListener('click', function () {
+    // Crear el overlay
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+    overlay.style.zIndex = '10000';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.classList.add('overlay-hidden'); // Inicia fuera de la pantalla
+
+    const iframe = document.createElement('iframe');
+    iframe.src = 'SERVIDOR-MENU.html'; // Ruta del archivo iframe
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    overlay.appendChild(iframe);
+
+    // Añadir el overlay al DOM
+    document.body.appendChild(overlay);
+
+    // Activar la animación de apertura
+    setTimeout(() => {
+      overlay.classList.remove('overlay-hidden');
+      overlay.classList.add('overlay-visible');
+    }, 10);
+  });
+
+    const createZoneButton = document.getElementById("createZoneButton");
+    const dropdownContent = document.getElementById("dropdownContent");
+
+    createZoneButton.addEventListener("click", () => {
+      dropdownContent.style.display =
+        dropdownContent.style.display === "none" ? "block" : "none";
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!createZoneButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+        dropdownContent.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>

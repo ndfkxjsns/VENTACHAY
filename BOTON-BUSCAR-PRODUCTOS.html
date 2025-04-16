@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clientes</title>
+  <style>
+  
+.client-body {
+  display: flex; /* Alinear las columnas horizontalmente */
+  justify-content: flex-start; /* Agrupar las columnas hacia la izquierda */
+  align-items: flex-start; /* Alineación vertical superior */
+  gap: 20px; /* Espaciado entre las columnas */
+  width: 100%; /* Mantener el ancho total disponible */
+}
+
+.client-section {
+  display: flex;
+  flex-direction: column; /* Alinear los elementos verticalmente */
+  gap: 10px; /* Espaciado entre los elementos */
+}
+
+/* Controlar el ancho de la columna izquierda */
+.client-section:nth-child(1) {
+  flex: 1; /* Puedes ajustar este valor o usar un porcentaje */
+  max-width: 50%; /* Limitar el ancho máximo */
+}
+
+/* Controlar el ancho de la columna derecha (Precio y Costo) */
+.client-section:nth-child(2) {
+  flex: 0.5; /* Ajusta este valor para cambiar el ancho de la columna */
+  max-width: 200px; /* Puedes establecer un valor máximo fijo si lo necesitas */
+  align-items: flex-start; /* Alinear "Precio" y "Costo" hacia la izquierda */
+  text-align: left; /* Asegura que el texto también esté alineado a la izquierda */
+}
+  .client-section:nth-child(2) div:first-child {
+  margin-top: 36px; /* Baja el elemento "Precio" */
+}
+
+.client-section:nth-child(2) div:nth-child(2) {
+  margin-top: 26px; /* Baja el elemento "Costo" */
+}
+  
+  
+  /* Todo el CSS que tienes ahora dentro de la etiqueta <style> */
+.overlay-hidden {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Resto del CSS */
+.overlay-visible {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Continúa moviendo todo el CSS aquí */
+/* Animación inicial - fuera de pantalla (izquierda) */
+    .overlay-hidden {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Posición visible */
+    .overlay-visible {
+      transform: translateX(0);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Animación de cierre - fuera de pantalla (derecha) */
+    .overlay-closing {
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+    }
+  
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      box-sizing: border-box;
+      z-index: 1000;
+    }
+
+    .menu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-logo img {
+      height: 32px;
+    }
+
+    .hamburger-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .hamburger-menu div {
+      width: 25px;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+    }
+
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #FFA500;
+    }
+
+    .profile-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #FFA500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .second-bar {
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      right: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .title span {
+      font-size: 16px;
+      color: gray;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      text-decoration: none;
+      justify-content: center;
+    }
+
+    .action-button:hover {
+      background-color: #e69500;
+    }
+
+    .main-container {
+      margin-top: 180px; /* Ajustado para reflejar el nuevo margen de la barra de paginación */
+      padding: 20px;
+      overflow: auto;
+      flex-grow: 1;
+    }
+
+    .pagination-bar {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 0;
+      position: fixed;
+      top: 120px; /* Ajustado más abajo */
+      left: 0;
+      right: 0;
+      z-index: 998;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      gap: 15px;
+    }
+
+    .pagination-button {
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .pagination-button:hover {
+      background-color: #e69500;
+    }
+
+    .pagination-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .pagination-numbers {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .pagination-number {
+      background-color: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination-number.active {
+      background-color: #FFA500;
+      color: white;
+      border-color: #FFA500;
+    }
+
+    .pagination-number:hover {
+      background-color: #e69500;
+      color: white;
+    }
+
+    .client-details {
+      background-color: #fff;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+      position: relative;
+      margin-bottom: 15px; /* Separación entre recuadros */
+    }
+
+    .client-details::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 5px;
+      border-radius: 15px 0 0 15px;
+      background-color: #FFA500; /* Naranja para clientes */
+    }
+
+    .client-details.prospect::before {
+      background-color: #808080; /* Gris para prospectos */
+    }
+
+    .client-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+    }
+
+    .client-photo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .client-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .client-info h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .client-info span {
+      font-size: 14px;
+      color: gray;
+    }
+
+    .client-body {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .client-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .status {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .status.enabled {
+      background-color: #28a745;
+    }
+
+    .status.disabled {
+      background-color: #dc3545;
+    }
+
+    .dropdown {
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    .dropdown button {
+      width: 100%;
+      background-color: #FFA500;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .dropdown button:hover {
+      background-color: #e69500;
+    }
+
+    .dropdown-content {
+      display: none;
+      margin-top: 10px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .dropdown-content div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .dropdown-content div i {
+      font-size: 20px;
+      color: #FFA500;
+    }
+
+    .dropdown-content div span {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .client-type {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 4px;
+      color: white;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .client-type.client {
+      background-color: #FFA500;
+    }
+
+    .client-type.prospect {
+      background-color: #808080;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="menu-logo">
+      <img src="logo.jpg" alt="Logo" />
+      <div class="hamburger-menu" id="hamburger-menu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <div class="search-container">
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">
+    </div>
+    <div class="profile-icon">U</div>
+  </div>
+
+  <div class="second-bar">
+    <div class="title">
+      Productos <span>(Total: 123)</span>
+    </div>
+    <div class="action-buttons">
+      <a href="BOTON-CREAR-CLIENTES.html" class="action-button">+</a>
+      <button class="action-button">⋮</button>
+      <button class="action-button">🔽</button>
+    </div>
+  </div>
+
+  <!-- Barra Paginadora -->
+  <div class="pagination-bar">
+    <button class="pagination-button" id="prevButton" disabled>Anterior</button>
+    <div class="pagination-numbers" id="paginationNumbers">
+      <button class="pagination-number active">1</button>
+      <button class="pagination-number">2</button>
+      <button class="pagination-number">3</button>
+      <!-- Puedes añadir más números según sea necesario -->
+    </div>
+    <button class="pagination-button" id="nextButton">Siguiente</button>
+  </div>
+
+  <div class="main-container">
+    <!-- Cliente -->
+    <div class="client-details">
+      <div class="client-header">
+        <div class="client-photo">P</div>
+      <div class="client-info">
+  <h2>Nombre del Producto</h2>
+  <span class="client-code">(00123)</span>
+</div>
+      </div>
+      <div class="client-body">
+        <div class="client-section">
+          <div class="status enabled">Habilitado</div>
+          <div><strong>Existencia:</strong> 7 PZS</div>
+          <div><strong>Categoria:</strong> Grenetina</div>
+          <div><strong>Familia:</strong> Gomitas</div>
+          
+        </div>
+        <!-- Sección derecha -->
+  <div class="client-section">
+    <div><strong>Precio:</strong>7.00</div>
+    <div><strong>Costo:</strong>3.00</div>
+ 
+</div>
+      </div>
+    </div>
+    <!-- Prospecto -->
+   <div class="client-details prospect">
+  <div class="client-header">
+    <div class="client-photo">P</div>
+    <div class="client-info">
+      <h2>Nombre del Prospecto</h2>
+      <span class="client-code">(00456)</span>
+    </div>
+  </div>
+  <div class="client-body">
+    <div class="client-section">
+      <div class="status disabled">Inhabilitado</div> <!-- Cambia el estado según sea necesario -->
+      <div><strong>Categoría:</strong> Semanal</div>
+      <div><strong>Límite de Crédito:</strong> $0</div>
+      <div><strong>Zona:</strong> Sur</div>
+      <div class="client-type prospect">Prospecto</div>
+    </div>
+    <!-- Sección derecha -->
+    <div class="client-section">
+      <div><strong>Precio:</strong>7.00</div>
+      <div><strong>Costo:</strong>3.00</div>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <script>
+  function closeOverlay() {
+    const overlay = document.querySelector('body > div[style*="z-index: 10000"]');
+    if (overlay) {
+        document.body.removeChild(overlay);
+    }
+}
+  
+  
+    document.getElementById('prevButton').addEventListener('click', function () {
+      alert('Cargar página anterior');
+    });
+
+    document.getElementById('nextButton').addEventListener('click', function () {
+      alert('Cargar página siguiente');
+    });
+
+    const paginationNumbers = document.querySelectorAll('.pagination-number');
+    paginationNumbers.forEach(button => {
+      button.addEventListener('click', () => {
+        paginationNumbers.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        alert(`Cargar página ${button.innerText}`);
+      });
+    });
+
+  // Función para cerrar el overlay con animación
+    function closeOverlay() {
+      const overlay = document.querySelector('body > div[style*="z-index: 10000"]'); // Seleccionar el overlay
+      if (overlay) {
+        // Iniciar animación de cierre
+        overlay.classList.remove('overlay-visible');
+        overlay.classList.add('overlay-closing');
+
+        // Esperar a que la animación termine antes de eliminar el overlay
+        setTimeout(() => {
+          document.body.removeChild(overlay);
+        }, 300); // Coincide con el tiempo definido en CSS (0.3s)
+      }
+    }
+
+    // Evento para abrir el overlay al hacer clic en el menú hamburguesa
+    document.getElementById('hamburger-menu').addEventListener('click', function () {
+      // Crear el overlay
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+      overlay.style.zIndex = '10000';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.classList.add('overlay-hidden'); // Inicia fuera de la pantalla
+
+      const iframe = document.createElement('iframe');
+      iframe.src = 'SERVIDOR-MENU.html'; // Ruta del archivo iframe
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.border = 'none';
+      overlay.appendChild(iframe);
+
+      // Añadir el overlay al DOM
+      document.body.appendChild(overlay);
+
+      // Activar la animación de apertura
+      setTimeout(() => {
+        overlay.classList.remove('overlay-hidden');
+        overlay.classList.add('overlay-visible');
+      }, 10);
+    });
+    
+  </script>
+</body>
+</html>
