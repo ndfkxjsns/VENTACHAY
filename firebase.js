@@ -1,35 +1,20 @@
-// Import the functions you need from the SDKs you need
+// firebase.js
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { getAnalytics } from 'firebase/analytics';
 
-// Your web app's Firebase configuration
+// Tu configuración de Firebase
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN.firebaseapp.com",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET.appspot.com",
-  messagingSenderId: "TU_MESSAGING_SENDER_ID",
-  appId: "TU_APP_ID",
-  measurementId: "TU_MEASUREMENT_ID"
+  apiKey: "AIzaSyAg5z1F4Dx6z9x0VHrBc45gnzgBm0Sa65s",
+  authDomain: "tc-1-81110.firebaseapp.com",
+  databaseURL: "https://tc-1-81110-default-rtdb.firebaseio.com",
+  projectId: "tc-1-81110",
+  storageBucket: "tc-1-81110.firebasestorage.app",
+  messagingSenderId: "1020958300613",
+  appId: "1:1020958300613:web:0f95e201916b1c5ea153ac",
+  measurementId: "G-8V0GYS69ZL"
 };
 
-// Initialize Firebase
+// Inicializa Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app); // Obtén la instancia de Firestore
 
-// Función para guardar un nuevo cliente (adaptada para la sintaxis modular)
-window.guardarCliente = async (clienteData) => {
-  try {
-    clienteData.fechaCreacion = serverTimestamp();
-    const docRef = await addDoc(collection(db, 'clientes'), clienteData);
-    console.log('✅ Cliente guardado con ID:', docRef.id);
-    return { success: true, id: docRef.id };
-  } catch (error) {
-    console.error('❌ Error guardando cliente:', error);
-    return { success: false, error: error.message };
-  }
-};
-
-// (Otras funciones como enviarComando, etc., irían aquí si las necesitas)
+// Puedes exportar la instancia de la aplicación si la necesitas en otros archivos
+export { app, firebaseConfig };
