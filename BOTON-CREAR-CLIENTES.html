@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crear Clienuuuute</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cliente</title>
   <style>
-    /* Estilos generales de la página */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -25,7 +24,6 @@
       position: fixed;
       width: 100%;
       top: 0;
-      left: 0;
       box-sizing: border-box;
       z-index: 1000;
     }
@@ -97,8 +95,7 @@
       padding: 12px 15px;
       position: fixed;
       top: 55px;
-      left: 0;
-      right: 0;
+      width: 100%;
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       z-index: 999;
     }
@@ -113,17 +110,7 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
       text-decoration: none;
-      font-size: 18px;
-    }
-
-    .back-button:hover {
-      background-color: #e69500;
-    }
-
-    .back-button i {
-      margin-right: 8px;
       font-size: 18px;
     }
 
@@ -143,8 +130,6 @@
       padding: 10px 16px;
       border-radius: 6px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
       font-size: 18px;
     }
 
@@ -218,27 +203,12 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-/* Animaciones del overlay */
-  .overlay-hidden {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .overlay-visible {
-    transform: translateX(0);
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .overlay-closing {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-  }
   </style>
 </head>
 <body>
   <div class="top-bar">
     <div class="menu-logo">
-      <img src="logo.jpg" alt="Logo" />
+      <img src="logo.jpg" alt="Logo">
       <div class="hamburger-menu" id="hamburger-menu">
         <div></div>
         <div></div>
@@ -246,19 +216,17 @@
       </div>
     </div>
     <div class="search-container">
-      <input type="text" class="search-input" id="searchInput" placeholder="Buscar clientes, productos o usuarios...">
+      <input type="text" class="search-input" placeholder="Buscar clientes, productos o usuarios...">
     </div>
     <div class="profile-icon">U</div>
   </div>
 
   <div class="second-bar">
     <div class="title">
-      <a href="BOTON-BUSCAR-CLIENTES.html" class="back-button">
-        <i>←</i>
-      </a>
-        Crear cliente
+      <a href="BOTON-BUSCAR-CLIENTES.html" class="back-button">←</a>
+      Crear cliente
     </div>
-    <button class="save-button"><i>✔</i></button>
+    <button class="save-button" id="save-button">✔</button>
   </div>
 
   <div class="main-container">
@@ -266,12 +234,12 @@
     <div class="form-background">
       <div class="form-container">
         <div class="radio-group">
-          <label for="cliente">
-            <input type="radio" id="cliente" name="tipo" value="cliente">
+          <label>
+            <input type="radio" name="tipo" value="cliente" checked>
             Cliente
           </label>
-          <label for="prospecto">
-            <input type="radio" id="prospecto" name="tipo" value="prospecto">
+          <label>
+            <input type="radio" name="tipo" value="prospecto">
             Prospecto
           </label>
         </div>
@@ -280,7 +248,7 @@
         <input type="text" id="codigo" placeholder="Ingresa el código del cliente">
 
         <label for="nombre-comercial">Nombre Comercial:</label>
-        <input type="text" id="nombre-comercial" placeholder="Ingresa el nombre comercial del cliente">
+        <input type="text" id="nombre-comercial" placeholder="Ingresa el nombre comercial del cliente" required>
 
         <label for="categoria">Categoría:</label>
         <select id="categoria">
@@ -319,7 +287,6 @@
 
         <div class="google-map">
           <iframe
-            id="google-map-frame"
             width="100%"
             height="100%"
             frameborder="0"
@@ -334,14 +301,14 @@
     <div class="info-bar">Datos de Contacto</div>
     <div class="form-background">
       <div class="form-container">
-        <label for="telefono">Encargado:</label>
-        <input type="tel" id="telefono" placeholder="Ingresa el teléfono">
-
-        <label for="email">Teléfono:</label>
-        <input type="email" id="email" placeholder="Ingresa el correo electrónico">
-
-        <label for="encargado">Correo electronico:</label>
+        <label for="encargado">Encargado:</label>
         <input type="text" id="encargado" placeholder="Ingresa el encargado">
+
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" id="telefono" placeholder="Ingresa el teléfono" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" placeholder="Ingresa el correo electrónico">
       </div>
     </div>
 
@@ -349,10 +316,10 @@
     <div class="form-background">
       <div class="form-container">
         <label for="precio">Precio:</label>
-        <input type="number" id="precio" placeholder="Ingresa el precio">
+        <input type="number" id="precio" placeholder="Ingresa el precio" step="0.01">
 
         <label for="costo">Costo:</label>
-        <input type="number" id="costo" placeholder="Ingresa el costo">
+        <input type="number" id="costo" placeholder="Ingresa el costo" step="0.01">
       </div>
     </div>
 
@@ -380,200 +347,72 @@
     </div>
   </div>
 
-  <script type="module">
-    alert('Script de Firebase cargado (INTENTO DE CORRECCIÓN)');
-    import { initializeApp } from 'firebase/app';
-    import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore';
-    import { getAnalytics } from 'firebase/analytics';
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let supabase = null;
 
-    const firebaseConfig = {
-      apiKey: "TU_API_KEY", // ¡REEMPLAZA CON TU API KEY!
-      authDomain: "TU_AUTH_DOMAIN.firebaseapp.com", // ¡REEMPLAZA CON TU AUTH DOMAIN!
-      projectId: "TU_PROJECT_ID", // ¡REEMPLAZA CON TU PROJECT ID!
-      storageBucket: "TU_STORAGE_BUCKET.appspot.com", // ¡REEMPLAZA CON TU STORAGE BUCKET!
-      messagingSenderId: "TU_MESSAGING_SENDER_ID", // ¡REEMPLAZA CON TU MESSAGING SENDER ID!
-      appId: "TU_APP_ID", // ¡REEMPLAZA CON TU APP ID!
-      measurementId: "TU_MEASUREMENT_ID" // ¡REEMPLAZA CON TU MEASUREMENT ID (OPCIONAL)!
-    };
-
-    let app;
-    try {
-      app = initializeApp(firebaseConfig);
-    } catch (error) {
-      alert('Error al inicializar Firebase: ' + error);
-      console.error('Error al inicializar Firebase:', error);
-    }
-
-    let db;
-    let analyticsInstance;
-    if (app) {
-      db = getFirestore(app);
-      analyticsInstance = getAnalytics(app);
-    }
-
-    window.guardarCliente = async (clienteData) => {
-      if (!db) {
-        alert('Firestore no se ha inicializado correctamente.');
-        return { success: false, error: 'Firestore no inicializado' };
-      }
+      // Intenta inicializar Supabase inmediatamente
       try {
-        clienteData.fechaCreacion = serverTimestamp();
-        const docRef = await addDoc(collection(db, 'clientes'), clienteData);
-        console.log('✅ Cliente guardado con ID:', docRef.id);
-        return { success: true, id: docRef.id };
-      } catch (error) {
-        console.error('❌ Error guardando cliente:', error);
-        return { success: false, error: error.message };
+        const supabaseUrl = 'https://qzhrppysnodlidnttoib.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF6aHJwcHlzbm9kbGlkbnR0b2liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ3OTE4MTIsImV4cCI6MjA2MDM2NzgxMn0.zEKauQ0rxmG0lwcUqSlS3sOY5-lbTkR3U9Vna42elQw';
+        supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        console.log('Supabase cliente inicializado correctamente.');
+      } catch (initialError) {
+        console.error('Error al inicializar el cliente de Supabase:', initialError);
+        alert('❌ Error al conectar con Supabase. Revisa la consola para más detalles.');
+        return; // Detiene la ejecución si la inicialización falla
       }
-    };
 
-    function obtenerDatosCliente() {
-      return {
-        tipo: document.querySelector('input[name="tipo"]:checked')?.value || '',
-        codigo: document.getElementById('codigo')?.value || '',
-        nombreComercial: document.getElementById('nombre-comercial')?.value || '',
-        categoria: document.getElementById('categoria')?.value || '',
-        comentarios: document.getElementById('comentarios')?.value || '',
-        direccion: document.getElementById('direccion')?.value || '',
-        ciudad: document.getElementById('ciudad')?.value || '',
-        colonia: document.getElementById('colonia')?.value || '',
-        codigoPostal: document.getElementById('codigo-postal')?.value || '',
-        zona: document.getElementById('zona')?.value || '',
-        latitud: document.getElementById('latitud')?.value || '',
-        longitud: document.getElementById('longitud')?.value || '',
-        encargado: document.getElementById('encargado')?.value || '',
-        telefono: document.getElementById('telefono')?.value || '',
-        email: document.getElementById('email')?.value || '',
-        precio: parseFloat(document.getElementById('precio')?.value) || 0,
-        costo: parseFloat(document.getElementById('costo')?.value) || 0,
-        tipoPago: document.getElementById('tipo-pago')?.value || '',
-        diasCredito: parseInt(document.getElementById('dias-credito')?.value) || 0,
-        rfc: document.getElementById('rfc')?.value || ''
-      };
-    }
-
-    function validarCliente(datos) {
-      if (!datos.nombreComercial) {
-        alert('El nombre comercial es obligatorio');
-        return false;
-      }
-      if (!datos.telefono) {
-        alert('El teléfono es obligatorio');
-        return false;
-      }
-      return true;
-    }
-
-    function limpiarFormulario() {
-      document.getElementById('nombre-comercial').value = '';
-          document.getElementById('telefono').value = '';
-      document.getElementById('codigo').value = '';
-      const tipoCliente = document.querySelector('input[name="tipo"]:checked');
-      if (tipoCliente) tipoCliente.checked = false;
-      const categoriaSelect = document.getElementById('categoria');
-      if (categoriaSelect) categoriaSelect.selectedIndex = 0;
-      const comentariosTextarea = document.getElementById('comentarios');
-      if (comentariosTextarea) comentariosTextarea.value = '';
-      const direccionInput = document.getElementById('direccion');
-      if (direccionInput) direccionInput.value = '';
-      const ciudadInput = document.getElementById('ciudad');
-      if (ciudadInput) ciudadInput.value = '';
-      const coloniaInput = document.getElementById('colonia');
-      if (coloniaInput) coloniaInput.value = '';
-      const codigoPostalInput = document.getElementById('codigo-postal');
-      if (codigoPostalInput) codigoPostalInput.value = '';
-      const zonaInput = document.getElementById('zona');
-      if (zonaInput) zonaInput.value = '';
-      const latitudInput = document.getElementById('latitud');
-      if (latitudInput) latitudInput.value = '';
-      const longitudInput = document.getElementById('longitud');
-      if (longitudInput) longitudInput.value = '';
-      const encargadoInput = document.getElementById('encargado');
-      if (encargadoInput) encargadoInput.value = '';
-      const emailInput = document.getElementById('email');
-      if (emailInput) emailInput.value = '';
-      const precioInput = document.getElementById('precio');
-      if (precioInput) precioInput.value = '';
-      const costoInput = document.getElementById('costo');
-      if (costoInput) costoInput.value = '';
-      const tipoPagoSelect = document.getElementById('tipo-pago');
-      if (tipoPagoSelect) tipoPagoSelect.selectedIndex = 0;
-      const diasCreditoInput = document.getElementById('dias-credito');
-      if (diasCreditoInput) diasCreditoInput.value = '';
-      const rfcInput = document.getElementById('rfc');
-      if (rfcInput) rfcInput.value = '';
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const saveButton = document.querySelector('.save-button');
-      if (saveButton) {
-        saveButton.addEventListener('click', async function() {
-          alert('Botón de guardar clickeado (CORRECCIÓN)');
-          console.log('Botón de guardar clickeado');
-          const datosCliente = obtenerDatosCliente();
-          alert('Datos del cliente: ' + JSON.stringify(datosCliente));
-          console.log('Datos del cliente a guardar:', datosCliente);
-
-          if (validarCliente(datosCliente)) {
-            alert('Intentando guardar cliente... (CORRECCIÓN)');
-            const resultado = await window.guardarCliente(datosCliente);
-
-            if (resultado.success) {
-              alert('Cliente guardado exitosamente con ID: ' + resultado.id);
-              limpiarFormulario();
-            } else {
-              alert('Error al guardar el cliente: ' + resultado.error);
-            }
-          } else {
-            alert('Error de validación. Revisa los campos obligatorios.');
+      document.getElementById('save-button').addEventListener('click', async function() {
+        try {
+          if (!document.getElementById('nombre-comercial').value) {
+            alert('El nombre comercial es obligatorio');
+            return;
           }
-        });
-      } else {
-        alert('Error: No se encontró el botón de guardar con la clase "save-button".');
-        console.error('Error: No se encontró el botón de guardar con la clase "save-button".');
-      }
+          if (!document.getElementById('telefono').value) {
+            alert('El teléfono es obligatorio');
+            return;
+          }
+
+          const clienteData = {
+            nombre_comercial: document.getElementById('nombre-comercial').value,
+            telefono: document.getElementById('telefono').value
+          };
+
+          if (supabase) {
+            const { data, error } = await supabase
+              .from('clientes')
+              .insert([clienteData])
+              .select();
+
+            if (error) {
+              console.error('Error al guardar:', error);
+              alert('❌ Error al guardar el cliente. ' + error.message);
+              return;
+            }
+
+            console.log('Cliente guardado:', data);
+            alert('✅ Cliente registrado correctamente! ID: ' + data[0].id);
+
+            document.getElementById('nombre-comercial').value = '';
+            document.getElementById('telefono').value = '';
+          } else {
+            console.error('El cliente de Supabase no está inicializado.');
+            alert('❌ Error: El servicio de Supabase no está disponible.');
+          }
+
+        } catch (error) {
+          console.error('Error inesperado:', error);
+          alert('❌ Ocurrió un error inesperado al intentar guardar el cliente. Por favor, revisa la consola para más detalles.');
+        }
+      });
+
+      document.getElementById('hamburger-menu').addEventListener('click', function() {
+        console.log('Menú hamburguesa clickeado');
+        // Aquí puedes añadir la lógica para mostrar/ocultar un menú lateral
+      });
     });
-
-    // Evento para abrir el overlay al hacer clic en el menú hamburguesa (lo dejo igual)
-    document.getElementById('hamburger-menu')?.addEventListener('click', function () {
-      const overlay = document.createElement('div');
-      overlay.style.position = 'fixed';
-      overlay.style.top = '0';
-      overlay.style.left = '0';
-      overlay.style.width = '100vw';
-      overlay.style.height = '100vh';
-      overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-      overlay.style.zIndex = '10000';
-      overlay.style.display = 'flex';
-      overlay.style.justifyContent = 'center';
-      overlay.style.alignItems = 'center';
-      overlay.classList.add('overlay-hidden');
-
-      const iframe = document.createElement('iframe');
-      iframe.src = 'index.html';
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      iframe.style.border = 'none';
-      overlay.appendChild(iframe);
-
-      document.body.appendChild(overlay);
-
-      setTimeout(() => {
-        overlay.classList.remove('overlay-hidden');
-        overlay.classList.add('overlay-visible');
-      }, 10);
-    });
-
-    function closeOverlay() {
-      const overlay = document.querySelector('body > div[style*="z-index: 10000"]');
-      if (overlay) {
-        overlay.classList.remove('overlay-visible');
-        overlay.classList.add('overlay-closing');
-        setTimeout(() => {
-          document.body.removeChild(overlay);
-        }, 300);
-      }
-    }
   </script>
 </body>
 </html>
