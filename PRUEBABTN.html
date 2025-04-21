@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Firebase</title>
+</head>
+<body>
+    <button id="pruebaFirebase">Probar Firebase</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBftARJVB3Cq1jQoPXdb-ldF-_NEWnyO_8",
+            authDomain: "tcservidor-b8874.firebaseapp.com",
+            projectId: "tcservidor-b8874",
+            storageBucket: "tcservidor-b8874.firebasestorage.app",
+            messagingSenderId: "1033968746876",
+            appId: "1:1033968746876:web:d75c3247adc32f785864f9",
+            measurementId: "G-R7L2183KKD"
+        };
+
+        let app;
+        let db;
+
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("Firebase inicializado correctamente!");
+        } catch (error) {
+            console.error("Error al inicializar Firebase:", error);
+        }
+
+        document.getElementById('pruebaFirebase').addEventListener('click', async () => {
+            if (db) {
+                try {
+                    const docRef = await addDoc(collection(db, "pruebas-boton"), {
+                        mensaje: "¡Botón funciona!"
+                    });
+                    console.log("Documento escrito con ID (botón): ", docRef.id);
+                } catch (e) {
+                    console.error("Error al agregar documento (botón): ", e);
+                }
+            } else {
+                console.log("Firebase no está inicializado.");
+            }
+        });
+    </script>
+</body>
+</html>
