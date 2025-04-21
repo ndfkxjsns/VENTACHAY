@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtrar Datos de Firestore</title>
+    <style>
+        body { font-family: sans-serif; }
+        #resultados { margin-top: 20px; border: 1px solid #ccc; padding: 10px; }
+        .documento { margin-bottom: 10px; border-bottom: 1px dashed #eee; padding-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Filtrar Datos de Firestore</h1>
+
+    <div>
+        <label for="campoFiltrar">Filtrar por campo:</label>
+        <select id="campoFiltrar">
+            <option value="nombre">Nombre</option>
+            <option value="edad">Edad</option>
+            <option value="ciudad">Ciudad</option>
+            </select>
+    </div>
+
+    <div>
+        <label for="valorFiltrar">Valor a filtrar:</label>
+        <input type="text" id="valorFiltrar">
+    </div>
+
+    <button onclick="filtrarDatos()">Filtrar</button>
+    <button onclick="mostrarTodos()">Mostrar Todos</button>
+
+    <div id="resultados">
+        <h2>Resultados:</h2>
+        <div id="listaDocumentos"></div>
+    </div>
+
+    <script type="module">
+        // Importa las funciones necesarias del SDK de Firebase Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+
+        // Tu configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBftARJVB3Cq1jQoPXdb-ldF-_NEWnyO_8",
+            authDomain: "tcservidor-b8874.firebaseapp.com",
+            projectId: "tcservidor-b8874",
+            storageBucket: "tcservidor-b8874.firebasestorage.app",
+            messagingSenderId: "1033968746876",
+            appId: "1:1033968746876:web:d75c3247adc32f785864f9",
+            measurementId: "G-R7L2183KKD"
+        };
+
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Inicializa Firestore
+        const db = getFirestore(app);
+        const usuariosCollection = collection(db, 'usuarios'); // Reemplaza 'usuarios' con el nombre de tu colección
+
+        // Función para mostrar los documentos en el HTML
+        function mostrarDocumentos(documentos) {
+            const listaDocumentosDiv = document.getElementById('listaDocumentos');
+            listaDocumentosDiv.innerHTML = ''; // Limpia los resultados anteriores
+
+            if (documentos.length > 0) {
+                documentos.forEach(doc => {
+                    const data = doc.data();
+                    const documentoDiv = document.createElement('div');
+                    documentoDiv.classList.add('documento');
+                    documentoDiv.innerHTML = `
+                        <strong>ID:</strong> ${doc.id}<br>
+                        <strong>Nombre:</strong> ${data.nombre || 'No disponible'}<br>
+                        <strong>Edad:</strong> ${data.edad || 'No disponible'}<br>
+                        <strong>Ciudad:</strong> ${data.ciudad || 'No disponible'}
+                        `;
+                    listaDocumentosDiv.appendChild(documentoDiv);
+                });
+            } else {
+                listaDocumentosDiv.innerHTML = '<p>No se encontraron resultados.</p>';
+            }
+        }
+
+        // Función para mostrar todos los documentos (sin filtro)
+        async function mostrarTodos() {
+            try {
+                const snapshot = await getDocs(usuariosCollection);
+                const documentos = snapshot.docs.map(doc => doc);
+                mostrarDocumentos(documentos);
+            } catch (error) {
+                console.error("Error al obtener documentos:", error);
+                document.getElementById('listaDocumentos').innerHTML = `<p>Error al cargar datos: ${error.message}</p>`;
+            }
+        }
+
+        // Función para filtrar los datos
+        async function filtrarDatos() {
+            const campoFiltrar = document.getElementById('campoFiltrar').value;
+            const valorFiltrar = document.getElementById('valorFiltrar').value;
+
+            try {
+                const q = query(usuariosCollection, where(campoFiltrar, "==", valorFiltrar));
+                const snapshot = await getDocs(q);
+                const documentos = snapshot.docs.map(doc => doc);
+                mostrarDocumentos(documentos);
+            } catch (error) {
+                console.error("Error al filtrar documentos:", error);
+                document.getElementById('listaDocumentos').innerHTML = `<p>Error al filtrar datos: ${error.message}</p>`;
+            }
+        }
+
+        // Carga inicial de todos los documentos
+        mostrarTodos();
+
+    </script>
+
+</body>
+</html>
