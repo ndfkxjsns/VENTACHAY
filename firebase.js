@@ -1,20 +1,10 @@
-// firebase.js
-import { initializeApp } from 'firebase/app';
-
-// Tu configuración de Firebase
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAg5z1F4Dx6z9x0VHrBc45gnzgBm0Sa65s",
-  authDomain: "tc-1-81110.firebaseapp.com",
-  databaseURL: "https://tc-1-81110-default-rtdb.firebaseio.com",
-  projectId: "tc-1-81110",
-  storageBucket: "tc-1-81110.firebasestorage.app",
-  messagingSenderId: "1020958300613",
-  appId: "1:1020958300613:web:0f95e201916b1c5ea153ac",
-  measurementId: "G-8V0GYS69ZL"
+  apiKey: "AIzaSyBftARJVB3Cq1jQoPXdb-ldF-_NEWnyO_8",
+  authDomain: "tcservidor-b8874.firebaseapp.com",
+  projectId: "tcservidor-b8874",
+  storageBucket: "tcservidor-b8874.firebasestorage.app",
+  messagingSenderId: "1033968746876",
+  appId: "1:1033968746876:web:d75c3247adc32f785864f9",
+  measurementId: "G-R7L2183KKD"
 };
-
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
-
-// Puedes exportar la instancia de la aplicación si la necesitas en otros archivos
-export { app, firebaseConfig };
