@@ -35,7 +35,6 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-right: 5px; /* Espacio entre botones */
         }
         button:hover {
             background-color: #4cae4c;
@@ -81,16 +80,6 @@
         #total_orden {
             font-weight: bold;
         }
-        #conexion_status {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .connected {
-            color: green;
-        }
-        .disconnected {
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -135,10 +124,7 @@
             <input type="number" id="cantidad_orden" value="1" min="1">
         </div>
 
-        <div>
-            <button id="agregar_producto">Agregar a la Orden</button>
-            <button id="check_conexion">Verificar Conexión</button>
-        </div>
+        <button id="agregar_producto">Agregar a la Orden</button>
 
         <div id="detalles_orden" style="margin-top: 20px; border: 1px solid #eee; padding: 10px;">
             <h3>Detalles de la Orden</h3>
@@ -163,49 +149,11 @@
         </div>
 
         <button id="confirmar_orden" style="margin-top: 10px;">Confirmar Orden de Compra</button>
-
-        <div id="conexion_status"></div>
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+  
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBftARJVB3Cq1jQoPXdb-ldF-_NEWnyO_8",
-            authDomain: "tcservidor-b8874.firebaseapp.com",
-            projectId: "tcservidor-b8874",
-            storageBucket: "tcservidor-b8874.firebasestorage.app",
-            messagingSenderId: "1033968746876",
-            appId: "1:1033968746876:web:d75c3247adc32f785864f9",
-            measurementId: "G-R7L2183KKD"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const database = getDatabase(app);
-        const conexionStatusDiv = document.getElementById('conexion_status');
-        const checkConexionButton = document.getElementById('check_conexion');
-
-        function verificarConexion() {
-            const connectedRef = ref(database, ".info/connected");
-            onValue(connectedRef, (snap) => {
-                if (snap.val() === true) {
-                    conexionStatusDiv.textContent = "Conectado a Firebase";
-                    conexionStatusDiv.className = "connected";
-                } else {
-                    conexionStatusDiv.textContent = "Desconectado de Firebase";
-                    conexionStatusDiv.className = "disconnected";
-                }
-            });
-        }
-
-        checkConexionButton.addEventListener('click', verificarConexion);
-
+    <script>
         const buscarProductoInput = document.getElementById('buscar_producto');
         const listaProductos = document.getElementById('lista_productos');
         const proveedorSelect = document.getElementById('proveedor');
@@ -331,19 +279,14 @@
             }
         });
 
-        // Ocultar la lista de productos
-  
-          // Ocultar la lista de productos al hacer clic fuera
+        // Ocultar la lista de productos al hacer clic fuera
         document.addEventListener('click', function(event) {
             if (!event.target.matches('#buscar_producto')) {
                 listaProductos.style.display = 'none';
             }
         });
-
-        // Verificar la conexión a Firebase al cargar la página
-        verificarConexion();
     </script>
-  <script type="module">
+<script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
@@ -366,9 +309,5 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script>
-
-
 </body>
 </html>
-
-    
