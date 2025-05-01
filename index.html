@@ -3,492 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIO CHAY</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Proceso de Orden de Compra y Fabricación</title>
     <style>
-    
-    .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #FF8C00;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.close-button:hover {
-    background-color: #cc7000;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.close-button i {
-    font-size: 16px;
-}
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: sans-serif;
+            margin: 20px;
         }
-        
-        .header {
-            background-color: #FF8C00;
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-            width: 100%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        
-        .header h1 {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        
-        .content {
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        /* Sección de botones sudoku (arriba) */
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .dashboard-button {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            aspect-ratio: 1/1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .dashboard-button:hover {
-            border-left: 4px solid #FF8C00;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .dashboard-button i {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #FF8C00;
-        }
-        
-        .dashboard-button span {
-            font-size: 14px;
+        label {
             display: block;
-        }
-        
-        /* Menú principal dividido (centro) */
-        .main-menu {
-            display: flex;
-            margin: 15px 10px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .main-menu-button {
-            flex: 1;
-            background-color: white;
-            border: none;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
+            margin-bottom: 5px;
             font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s ease;
         }
-        
-        .main-menu-button.active {
-            background-color: #FF8C00;
-            color: white;
-        }
-        
-        .main-menu-button:first-child {
-            border-right: 1px solid #ddd;
-        }
-        
-        /* Contenedor de menú */
-        .menu-container {
-            margin-top: 10px;
-        }
-        
-        /* Categorías principales */
-        .category {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%;
+            padding: 8px;
             margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            color: #FF8C00;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+            margin-right: 5px; /* Espacio entre botones */
         }
-        
-        .category:hover {
-            border-left: 4px solid #FF8C00;
+        button:hover {
+            background-color: #4cae4c;
         }
-        
-        .category i {
-            transition: transform 0.3s ease;
-            font-size: 14px;
-        }
-        
-        .category.expanded i {
-            transform: rotate(90deg);
-        }
-        
-        /* Submenús */
-        .submenu {
-            margin-left: 15px;
-            margin-top: 8px;
-            overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.3s ease;
-        }
-        
-        .category.expanded + .submenu {
-            max-height: 1000px;
-        }
-        
-        .submenu-item {
-            background-color: #fffaf5;
+        #lista_productos {
+            list-style: none;
+            padding: 0;
             border: 1px solid #eee;
-            border-radius: 6px;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-left: 15px;
-            font-weight: normal;
-            color: #333;
-        }
-        
-        .submenu-item:hover {
-            border-left: 3px solid #FF8C00;
-            background-color: #fff3e6;
-        }
-        
-        /* Sección de reportes */
-        .report-section {
+            margin-top: 5px;
+            max-height: 150px;
+            overflow-y: auto;
             display: none;
+            background-color: white;
+            z-index: 10;
+            position: absolute;
+            width: calc(100% - 32px); /* Adjust width for padding and border */
+        }
+        #lista_productos li {
+            padding: 8px;
+            cursor: pointer;
+        }
+        #lista_productos li:hover {
+            background-color: #f9f9f9;
+        }
+        #detalles_orden table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #detalles_orden th, #detalles_orden td {
+            border-bottom: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        #detalles_orden th:last-child, #detalles_orden td:last-child {
+            text-align: right;
+        }
+        #detalles_orden th:nth-child(2), #detalles_orden td:nth-child(2) {
+            text-align: right;
+        }
+        #detalles_orden th:nth-child(3), #detalles_orden td:nth-child(3) {
+            text-align: right;
+        }
+        #total_orden {
+            font-weight: bold;
+        }
+        #conexion_status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .connected {
+            color: green;
+        }
+        .disconnected {
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-    <h1>TIO CHAY</h1>
-  <div class="close-button" onclick="parent.closeOverlay()">
-    <i class="fas fa-times"></i>
-</div>
-</div>
-    <div class="content">
-        <!-- Sección de botones sudoku (3x3) -->
-        <div class="button-grid">
-            <div class="dashboard-button">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Tablero</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-users"></i>
-                <span>Usuarios</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-calendar-check"></i>
-                <span>Calendario de visitas</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-route"></i>
-                <span>Administrar rutas de venta</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-file-alt"></i>
-                <span>Formularios</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-broadcast-tower"></i>
-                <span>Enviar mensaje a todos los dispositivos</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-boxes"></i>
-                <span>Inventario</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-sync-alt"></i>
-                <span>Recarga de producto</span>
-            </div>
-            <div class="dashboard-button">
-                <i class="fas fa-cog"></i>
-                <span>Configuración</span>
-            </div>
+
+    <div class="container">
+        <h2>Nueva Orden de Compra</h2>
+        <div>
+            <label for="buscar_producto">Buscar Producto:</label>
+            <input type="text" id="buscar_producto" placeholder="Ingrese el nombre del producto">
+            <ul id="lista_productos">
+                <li data-nombre="LUNETAS" data-precio-m="10.00" data-precio-f="10.50" data-precio-p="11.00">LUNETAS</li>
+                <li data-nombre="DIENTES TIBURONES" data-precio-m="12.00" data-precio-f="12.50" data-precio-p="13.00">DIENTES TIBURONES</li>
+                <li data-nombre="HUEVITO PINTO" data-precio-m="8.00" data-precio-f="8.50" data-precio-p="9.00">HUEVITO PINTO</li>
+                <li data-nombre="GUSANITO NEON" data-precio-m="9.50" data-precio-f="10.00" data-precio-p="10.50">GUSANITO NEON</li>
+                <li data-nombre="OSITO ENCHILADO" data-precio-m="11.50" data-precio-f="12.00" data-precio-p="12.50">OSITO ENCHILADO</li>
+                <li data-nombre="GOTITAS" data-precio-m="7.00" data-precio-f="7.50" data-precio-p="8.00">GOTITAS</li>
+                <li data-nombre="PINGÜINO" data-precio-m="13.00" data-precio-f="13.50" data-precio-p="14.00">PINGÜINO</li>
+                <li data-nombre="ALMENDRA CONFITADA" data-precio-m="15.00" data-precio-f="15.50" data-precio-p="16.00">ALMENDRA CONFITADA</li>
+                <li data-nombre="OSITOS" data-precio-m="9.00" data-precio-f="9.50" data-precio-p="10.00">OSITOS</li>
+                <li data-nombre="MANGUITO ENCHILADO" data-precio-m="10.50" data-precio-f="11.00" data-precio-p="11.50">MANGUITO ENCHILADO</li>
+                <li data-nombre="GUSANITOS" data-precio-m="8.50" data-precio-f="9.00" data-precio-p="9.50">GUSANITOS</li>
+            </ul>
         </div>
-        
-        <!-- Menú principal dividido -->
-        <div class="main-menu">
-            <button class="main-menu-button active" id="menuBtn">Menú principal</button>
-            <button class="main-menu-button" id="reportsBtn">Reportes y Metas</button>
+
+        <div>
+            <label for="proveedor">Proveedor:</label>
+            <select id="proveedor">
+                <option value="">Seleccionar Proveedor</option>
+                <option value="M">PROVEDOR M</option>
+                <option value="F">PROVEDOR F</option>
+                <option value="P">PROVEDOR P</option>
+            </select>
         </div>
-        
-        <!-- Contenedor de menú principal -->
-        <div class="menu-container" id="mainMenu">
-            <!-- Administración -->
-            <div class="category expanded" onclick="toggleCategory(this)">
-                <span>Administración</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Importar/exportar excel</div>
-            </div>
-            
-            <!-- Formularios -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Formularios</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Formulario</div>
-                <div class="submenu-item">Encuestas</div>
-            </div>
-            
-            <!-- Catálogos -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Catálogos</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item" onclick="location.href='BOTON-BUSCAR-CLIENTES.html'">Clientes</div>
-                <div class="submenu-item"onclick="location.href='BOTON-CATEGORIAS-CLIENTES.html'">Categoría de clientes</div>
-                <div class="submenu-item">Descuentos y Promociones</div>
-                <div class="submenu-item">Proveedores</div>
-                <div class="submenu-item">Gastos</div>
-            </div>
-            
-            <!-- Ventas -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Ventas</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">              
-                <div class="submenu-item">Productos vendidos</div>
-                <div class="submenu-item">Productos regalados</div>
-                <div class="submenu-item">Reporte de almacén</div>
-                <div class="submenu-item">Corte de caja general</div>
-                <div class="submenu-item">Gestión de devoluciones y cambios</div>
-            </div>
-            
-            <!-- Almacén -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Almacén</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item" onclick="location.href='BOTON-BUSCAR-ALMACENES.html'">Almacenes</div>
-                <div class="submenu-item" onclick="location.href='BOTON-AUDITORIAS.html'">Auditoría Física</div>
-                <div class="submenu-item">Compras</div>
-                <div class="submenu-item">Ordenes de compra</div>
-                <div class="submenu-item">Fabricacion</div>
-                <div class="submenu-item">Movimientos</div>
-                <div class="submenu-item" onclick="location.href='BOTON-BUSCAR-PRODUCTOS.html'">Productos</div>
-                <div class="submenu-item">Paquetes</div>
-            </div>
-            
-            <!-- App Móvil -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>App Móvil</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Dispositivos móviles</div>
-                <div class="submenu-item">Zonificador</div>
-                <div class="submenu-item" onclick="location.href='BOTON-ZONAS.html'" >Zonas</div>
-                <div class="submenu-item"onclick="location.href='PRUEBABTN.html'">Geocerca</div>
-                <div class="submenu-item" onclick="location.href='filtro.html'">Concepto de visita</div>
-                <div class="submenu-item">Horario</div>
-                <div class="submenu-item">Empleados checks</div>
-                <div class="submenu-item">Cronómetro</div>
-            </div>
-            
-            <!-- Control de flota -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Control de flota</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Vehículos</div>
-                <div class="submenu-item">Mantenimientos</div>
-                <div class="submenu-item">Consumo de combustible</div>
-                <div class="submenu-item">Seguros</div>
-            </div>
-            
-            <!-- Configuración -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Configuración</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Compañia</div>
-                <div class="submenu-item">Generales</div>
-                <div class="submenu-item">Clientes</div>
-                <div class="submenu-item">Pedidos</div>
-                <div class="submenu-item">Entregas</div>
-                <div class="submenu-item">Tickets</div>
-                <div class="submenu-item">Formularios</div>
-                <div class="submenu-item">Notificaciones</div>
-                <div class="submenu-item">Integraciones</div>
-            </div>
+
+        <div>
+            <label for="precio_producto">Precio:</label>
+            <input type="text" id="precio_producto" value="" readonly>
         </div>
-        
-        <!-- Contenedor de reportes (oculto inicialmente) -->
-        <div class="menu-container report-section" id="reportsMenu">
-            <!-- Reportes -->
-            <div class="category expanded" onclick="toggleCategory(this)">
-                <span>Reportes</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Reportes generales</div>
-                <div class="submenu-item">Reportes configurables</div>
-                <div class="submenu-item">Reporte taller</div>
-                <div class="submenu-item">Reporte de ventas</div>
-                <div class="submenu-item">Reporte de inventario</div>
-                <div class="submenu-item">Reporte financiero</div>
-            </div>
-            
-            <!-- Metas -->
-            <div class="category" onclick="toggleCategory(this)">
-                <span>Metas</span>
-                <i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="submenu">
-                <div class="submenu-item">Metas de venta</div>
-                <div class="submenu-item">Seguimiento de metas</div>
-                <div class="submenu-item">Histórico de cumplimiento</div>
-                <div class="submenu-item">Proyecciones</div>
-                <div class="submenu-item">Comparativo por periodo</div>
-            </div>
+
+        <div>
+            <label for="cantidad_orden">Cantidad:</label>
+            <input type="number" id="cantidad_orden" value="1" min="1">
         </div>
+
+        <div>
+            <button id="agregar_producto">Agregar a la Orden</button>
+            <button id="check_conexion">Verificar Conexión</button>
+        </div>
+
+        <div id="detalles_orden" style="margin-top: 20px; border: 1px solid #eee; padding: 10px;">
+            <h3>Detalles de la Orden</h3>
+            <table id="tabla_orden">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpo_tabla_orden">
+                    </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right; font-weight: bold;">Total:</td>
+                        <td id="total_orden" style="text-align: right; font-weight: bold;">$0.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <button id="confirmar_orden" style="margin-top: 10px;">Confirmar Orden de Compra</button>
+
+        <div id="conexion_status"></div>
     </div>
 
-    <script>
-        // Alternar entre menú principal y reportes
-        const menuBtn = document.getElementById('menuBtn');
-        const reportsBtn = document.getElementById('reportsBtn');
-        const mainMenu = document.getElementById('mainMenu');
-        const reportsMenu = document.getElementById('reportsMenu');
-        
-        menuBtn.addEventListener('click', function() {
-            this.classList.add('active');
-            reportsBtn.classList.remove('active');
-            mainMenu.style.display = 'block';
-            reportsMenu.style.display = 'none';
-        });
-        
-        reportsBtn.addEventListener('click', function() {
-            this.classList.add('active');
-            menuBtn.classList.remove('active');
-            mainMenu.style.display = 'none';
-            reportsMenu.style.display = 'block';
-        });
-        
-        // Función para expandir/colapsar categorías
-        function toggleCategory(element) {
-            element.classList.toggle('expanded');
-        }
-        
-        // Inicialización - expandir primera categoría
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.category').classList.add('expanded');
-        });
-// --------------------->>>>>   
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Clientes') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Zonas') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Categoría de clientes') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Productos') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Almacenes') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    
-    document.querySelectorAll('.submenu-item').forEach(item => {
-    if (item.textContent.trim() === 'Auditoría Física') {
-        item.style.backgroundColor = '#ffeceb'; // Cambia el color de fondo
-        item.style.border = '2px solid #ffb3b3'; // Agrega un borde
-        item.style.borderRadius = '8px'; // Bordes redondeados
-        item.style.padding = '12px'; // Espaciado interno
-    }
-});
-    </script>
     <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBftARJVB3Cq1jQoPXdb-ldF-_NEWnyO_8",
+            authDomain: "tcservidor-b8874.firebaseapp.com",
+            projectId: "tcservidor-b8874",
+            storageBucket: "tcservidor-b8874.firebasestorage.app",
+            messagingSenderId: "1033968746876",
+            appId: "1:1033968746876:web:d75c3247adc32f785864f9",
+            measurementId: "G-R7L2183KKD"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+        const conexionStatusDiv = document.getElementById('conexion_status');
+        const checkConexionButton = document.getElementById('check_conexion');
+
+        function verificarConexion() {
+            const connectedRef = ref(database, ".info/connected");
+            onValue(connectedRef, (snap) => {
+                if (snap.val() === true) {
+                    conexionStatusDiv.textContent = "Conectado a Firebase";
+                    conexionStatusDiv.className = "connected";
+                } else {
+                    conexionStatusDiv.textContent = "Desconectado de Firebase";
+                    conexionStatusDiv.className = "disconnected";
+                }
+            });
+        }
+
+        checkConexionButton.addEventListener('click', verificarConexion);
+
+        const buscarProductoInput = document.getElementById('buscar_producto');
+        const listaProductos = document.getElementById('lista_productos');
+        const proveedorSelect = document.getElementById('proveedor');
+        const precioProductoInput = document.getElementById('precio_producto');
+        const cantidadOrdenInput = document.getElementById('cantidad_orden');
+        const agregarProductoButton = document.getElementById('agregar_producto');
+        const cuerpoTablaOrden = document.getElementById('cuerpo_tabla_orden');
+        const totalOrdenElement = document.getElementById('total_orden');
+        const confirmarOrdenButton = document.getElementById('confirmar_orden');
+
+        let productos = [
+            { nombre: 'LUNETAS', precio_m: 10.00, precio_f: 10.50, precio_p: 11.00 },
+            { nombre: 'DIENTES TIBURONES', precio_m: 12.00, precio_f: 12.50, precio_p: 13.00 },
+            { nombre: 'HUEVITO PINTO', precio_m: 8.00, precio_f: 8.50, precio_p: 9.00 },
+            { nombre: 'GUSANITO NEON', precio_m: 9.50, precio_f: 10.00, precio_p: 10.50 },
+            { nombre: 'OSITO ENCHILADO', precio_m: 11.50, precio_f: 12.00, precio_p: 12.50 },
+            { nombre: 'GOTITAS', precio_m: 7.00, precio_f: 7.50, precio_p: 8.00 },
+            { nombre: 'PINGÜINO', precio_m: 13.00, precio_f: 13.50, precio_p: 14.00 },
+            { nombre: 'ALMENDRA CONFITADA', precio_m: 15.00, precio_f: 15.50, precio_p: 16.00 },
+            { nombre: 'OSITOS', precio_m: 9.00, precio_f: 9.50, precio_p: 10.00 },
+            { nombre: 'MANGUITO ENCHILADO', precio_m: 10.50, precio_f: 11.00, precio_p: 11.50 },
+            { nombre: 'GUSANITOS', precio_m: 8.50, precio_f: 9.00, precio_p: 9.50 }
+        ];
+
+        let orden = [];
+
+        buscarProductoInput.addEventListener('input', function() {
+            const textoBusqueda = this.value.toUpperCase();
+            const productosFiltrados = productos.filter(producto => producto.nombre.toUpperCase().includes(textoBusqueda));
+
+            listaProductos.innerHTML = '';
+            if (textoBusqueda && productosFiltrados.length > 0) {
+                listaProductos.style.display = 'block';
+                productosFiltrados.forEach(producto => {
+                    const li = document.createElement('li');
+                    li.textContent = producto.nombre;
+                    li.dataset.nombre = producto.nombre;
+                    li.dataset.precioM = producto.precio_m;
+                    li.dataset.precioF = producto.precio_f;
+                    li.dataset.precioP = producto.precio_p;
+                    li.addEventListener('click', function() {
+                        buscarProductoInput.value = this.dataset.nombre;
+                        precioProductoInput.value = ''; // Limpiar precio al seleccionar nuevo producto
+                        listaProductos.style.display = 'none';
+                    });
+                    listaProductos.appendChild(li);
+                });
+            } else {
+                listaProductos.style.display = 'none';
+            }
+        });
+
+        proveedorSelect.addEventListener('change', function() {
+            const proveedorSeleccionado = this.value;
+            const productoSeleccionado = productos.find(p => p.nombre === buscarProductoInput.value);
+
+            if (productoSeleccionado && proveedorSeleccionado) {
+                precioProductoInput.value = productoSeleccionado[`precio_${proveedorSeleccionado.toLowerCase()}`] || '';
+            } else {
+                precioProductoInput.value = '';
+            }
+        });
+
+        agregarProductoButton.addEventListener('click', function() {
+            const nombreProducto = buscarProductoInput.value;
+            const precioUnitario = parseFloat(precioProductoInput.value);
+            const cantidad = parseInt(cantidadOrdenInput.value);
+
+            if (nombreProducto && !isNaN(precioUnitario) && !isNaN(cantidad) && cantidad > 0) {
+                const productoExistente = orden.find(item => item.nombre === nombreProducto);
+                if (productoExistente) {
+                    productoExistente.cantidad += cantidad;
+                    productoExistente.subtotal = productoExistente.precio * productoExistente.cantidad;
+                } else {
+                    orden.push({
+                        nombre: nombreProducto,
+                        precio: precioUnitario,
+                        cantidad: cantidad,
+                        subtotal: precioUnitario * cantidad
+                    });
+                }
+                actualizarTablaOrden();
+                buscarProductoInput.value = '';
+                precioProductoInput.value = '';
+                cantidadOrdenInput.value = 1;
+                proveedorSelect.value = '';
+                listaProductos.style.display = 'none';
+            } else {
+                alert('Por favor, seleccione un producto, proveedor y una cantidad válida.');
+            }
+        });
+
+        function actualizarTablaOrden() {
+            cuerpoTablaOrden.innerHTML = '';
+            let total = 0;
+            orden.forEach(item => {
+                const fila = cuerpoTablaOrden.insertRow();
+                const celdaNombre = fila.insertCell();
+                const celdaPrecio = fila.insertCell();
+                const celdaCantidad = fila.insertCell();
+                const celdaSubtotal = fila.insertCell();
+
+                celdaNombre.textContent = item.nombre;
+                celdaPrecio.textContent = `$${item.precio.toFixed(2)}`;
+                celdaCantidad.textContent = item.cantidad;
+                celdaSubtotal.textContent = `$${item.subtotal.toFixed(2)}`;
+                celdaPrecio.style.textAlign = 'right';
+                celdaCantidad.style.textAlign = 'right';
+                celdaSubtotal.style.textAlign = 'right';
+                total += item.subtotal;
+            });
+            totalOrdenElement.textContent = `$${total.toFixed(2)}`;
+        }
+
+        confirmarOrdenButton.addEventListener('click', function() {
+            if (orden.length > 0) {
+                alert('Orden de compra confirmada. Los detalles son:\n' + JSON.stringify(orden, null, 2) + '\nTotal: ' + totalOrdenElement.textContent);
+                // Aquí iría la lógica para enviar la orden al servidor
+                orden = [];
+                actualizarTablaOrden();
+            } else {
+                alert('La orden de compra está vacía. Agregue productos.');
+            }
+        });
+
+        // Ocultar la lista de productos
+  
+          // Ocultar la lista de productos al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            if (!event.target.matches('#buscar_producto')) {
+                listaProductos.style.display = 'none';
+            }
+        });
+
+        // Verificar la conexión a Firebase al cargar la página
+        verificarConexion();
+    </script>
+  <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
@@ -512,5 +367,8 @@
   const analytics = getAnalytics(app);
 </script>
 
+
 </body>
 </html>
+
+    
