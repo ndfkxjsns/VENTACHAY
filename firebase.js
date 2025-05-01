@@ -1,6 +1,5 @@
-// firebase.js
+// Importa las funciones necesarias de los SDKs de Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 // Tu configuración de Firebase
@@ -14,9 +13,11 @@ const firebaseConfig = {
   measurementId: "G-R7L2183KKD"
 };
 
-// Inicializar Firebase
+// Inicializa la aplicación de Firebase con tu configuración
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app); // Inicializa Firestore
 
-export { db }; // Exporta la instancia de Firestore
+// Inicializa el servicio de Firestore y obtén una referencia a la base de datos
+const db = getFirestore(app);
+
+// Exporta la instancia de la base de datos de Firestore para poder usarla en otros archivos
+export { db };
